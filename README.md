@@ -4,7 +4,8 @@
 
 This application will pinpoint water fountains around UBC Vancouver campus.
 These features will appear as a pin on a map, which users would be able to click on to gather more
-specific information. Users will be able to create new pins on the map to mark any place on campus
+specific information. They will be able to select favourite pins to add to a collection. 
+Users will also be able to create new pins on the map to mark any place on campus
 of their choice.
 
 Each selected pins would have information such as:
@@ -22,3 +23,13 @@ accesible fountains around campus, and allow users to add pins to notate other f
 microwaves or favourite study spots.
 
 I hope this application will be of use to the students of UBC.
+
+## User Stories
+
+- as a user, I want to be able to click on a pin and view its information
+- as a user, I want to be able to select a pin and add to favourites
+- as a user, I want to be able to add a pin to the map with a picture,
+location, and directions
+- as a user, I want to be able to mark a pin as "unavailable" or "broken"
+- as a user, I want to be able to edit a pin's information 
+- as a user, 
