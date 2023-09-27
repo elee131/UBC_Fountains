@@ -31,5 +31,5 @@ I hope this application will be of use to the students of UBC.
 - as a user, I want to be able to add a pin to the map with a picture,
 location, and directions
 - as a user, I want to be able to mark a pin as "unavailable" or "broken"
-- as a user, I want to be able to edit a pin's information 
-- as a user, 
+- as a user, I want to be able to make edits on a pin's information 
+- as a user, I want to be able to search pins by buildings
