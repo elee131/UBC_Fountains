@@ -8,7 +8,7 @@ specific information. They will be able to select favourite pins to add to a col
 Users will also be able to create new pins on the map to mark any place on campus
 of their choice.
 
-Each selected pins would have information such as:
+Each pin would have information such as:
 - a picture
 - general location
 - directions from the entrance of the building
@@ -32,4 +32,5 @@ I hope this application will be of use to the students of UBC.
 location, and directions
 - as a user, I want to be able to mark a pin as "unavailable" or "broken"
 - as a user, I want to be able to make edits on a pin's information 
-- as a user, I want to be able to search pins by buildings
+- as a user, I want to be able to search pins by buildings 
+- as a user, I want to sort pins by status and remove broken ones from favourites
