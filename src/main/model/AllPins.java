@@ -11,6 +11,7 @@ public class AllPins implements PinList {
         allPins = new ArrayList<>();
     }
 
+    // TODO
     // EFFECTS: return pin with matching tag, sorted in alphabetical order
     @Override
     public List<Pin> searchTag(String str) {
@@ -18,12 +19,15 @@ public class AllPins implements PinList {
     }
 
 
+    // TODO
     // EFFECTS: return pin with matching location
     @Override
-    public List<Pin> searchLocation() {
+    public List<Pin> searchLocation(String location) {
         return null;
     }
 
+
+    // TODO
     // MODIFIES: this
     // EFFECTS: adds pin to list if it does not exist already in the list
     @Override
@@ -31,6 +35,7 @@ public class AllPins implements PinList {
         return false;
     }
 
+    // TODO
     public int getSize() {
         return -1;
     }

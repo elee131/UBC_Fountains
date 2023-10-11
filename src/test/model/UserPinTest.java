@@ -1,26 +1,24 @@
 package model;
 
 import org.junit.jupiter.api.BeforeEach;
-
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class WaterFountainTest {
+public class UserPinTest {
 
-    WaterFountain waterFountain;
+    UserPin userPin;
 
 
     @BeforeEach
     void runBefore() {
-        waterFountain = new WaterFountain("LIFE");
+
+
     }
 
     @Test
     void testConstructor() {
-        assertEquals("LIFE", waterFountain.getLocation());
-        assertEquals("Water Fountain", waterFountain.getTag());
-        assertEquals("Working", waterFountain.getStatus());
+
     }
 
     @Test
@@ -32,4 +30,6 @@ public class WaterFountainTest {
     void testAddFavourite() {
 
     }
+
+
 }

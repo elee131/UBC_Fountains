@@ -4,9 +4,9 @@ import java.util.List;
 
 public interface PinList {
 
-    List<Pin> searchTag(String str);
+    List<Pin> searchTag(String tag);
 
-    List<Pin> searchLocation();
+    List<Pin> searchLocation(String location);
 
     boolean addPin(Pin pin);
 

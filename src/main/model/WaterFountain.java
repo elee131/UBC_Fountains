@@ -37,6 +37,15 @@ public class WaterFountain implements Pin {
 
     }
 
+    // TODO
+    // MODIFIES: this
+    // EFFECTS: adds direction to the given founntain
+
+    @Override
+    public void addDirection(String directions){
+
+    }
+
     public String getTag() {
         return this.tag;
     }

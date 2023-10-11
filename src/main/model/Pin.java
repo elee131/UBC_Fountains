@@ -9,4 +9,6 @@ public interface Pin {
 
     // EFFECTS: add the pin to favourites
     void addToFavourite();
+
+    void addDirection(String direction);
 }

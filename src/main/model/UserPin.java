@@ -23,4 +23,9 @@ public class UserPin implements Pin {
     public void addToFavourite() {
 
     }
+
+    @Override
+    public void addDirection(String direction) {
+
+    }
 }
