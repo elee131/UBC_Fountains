@@ -29,14 +29,20 @@ public class AllPins implements PinList {
 
     // TODO
     // MODIFIES: this
-    // EFFECTS: adds pin to list if it does not exist already in the list
+    // EFFECTS: adds pin to list and return true if it does not exist already in the list
+    // return false otherwise
     @Override
     public boolean addPin(Pin pin) {
         return false;
     }
 
+
     // TODO
-    public int getSize() {
-        return -1;
+    // MODIFIES: this
+    // EFFECTS: removes the given pin from the list and returns true.
+    // If it does not exist, return false and do nothing
+    public boolean removePin(Pin pin) {
+        return false;
     }
+
 }

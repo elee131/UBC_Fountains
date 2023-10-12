@@ -20,30 +20,26 @@ public class WaterFountain implements Pin {
         directions = "";
     }
 
-    // TODO
-    // REQUIRES: input must be valid status; from "Broken", unavailable, "working"
+    // REQUIRES: input must be valid status;  "Broken" or "working"
     // MODIFIES: this
     // EFFECTS: change the status of a pin
     @Override
     public void setStatus(String status) {
-
+        this.status = status;
     }
 
-    // TODO
-    // MODIFIES: favourite
-    // EFFECTS: add list to favourites
-    @Override
-    public void addToFavourite() {
-
-    }
 
     // TODO
     // MODIFIES: this
-    // EFFECTS: adds direction to the given founntain
+    // EFFECTS: adds direction to the given fountain
 
     @Override
-    public void addDirection(String directions){
+    public void setDirection(String directions) {
+        this.directions = directions;
+    }
 
+    public boolean isBroken() {
+        return (status == "Broken");
     }
 
     public String getTag() {

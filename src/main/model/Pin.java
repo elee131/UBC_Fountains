@@ -7,8 +7,5 @@ public interface Pin {
     // EFFECTS: change status of a pin
     void setStatus(String status);
 
-    // EFFECTS: add the pin to favourites
-    void addToFavourite();
-
-    void addDirection(String direction);
+    void setDirection(String direction);
 }
