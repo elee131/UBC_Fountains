@@ -8,4 +8,11 @@ public interface Pin {
     void setStatus(String status);
 
     void setDirection(String direction);
+
+    String getTag();
+
+    String getLocation();
+
+
+    String getStatus();
 }

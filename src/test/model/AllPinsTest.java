@@ -50,15 +50,15 @@ public class AllPinsTest {
 
     @Test
     void testAddMultiplePins() {
-        List<Pin> fountains = allPins.searchTag("Water Fountain");
-
         allPins.addPin(fountain);
         boolean success = allPins.addPin(fountain2);
 
+        List<Pin> fountains = allPins.searchTag("Water Fountain");
+
         assertTrue(success);
-        assertEquals(1, fountains.size());
+        assertEquals(2, fountains.size());
         assertEquals(fountain, fountains.get(0));
-        assertEquals(fountain2, fountains.get(0));
+        assertEquals(fountain2, fountains.get(1));
 
 
 
@@ -66,16 +66,14 @@ public class AllPinsTest {
 
     @Test
     void testAddDuplicate() {
-        List<Pin> fountains = allPins.searchTag("Water Fountain");
-        boolean success = allPins.addPin(fountain);
         allPins.addPin(fountain);
+        boolean success = allPins.addPin(fountain);
+        List<Pin> fountains = allPins.searchTag("Water Fountain");
 
         assertFalse(success);
 
         assertEquals(1, fountains.size());
         assertEquals(fountain, fountains.get(0));
-
-
     }
 
 

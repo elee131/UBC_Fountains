@@ -5,6 +5,7 @@ public class UserPin implements Pin {
     private String status;
     private String location;
     private String directions;
+    private int id;
 
 
     public UserPin(String location, String tag) {
@@ -13,6 +14,7 @@ public class UserPin implements Pin {
         this.tag = tag;
         status = "Working";
         directions = "";
+
 
     }
 

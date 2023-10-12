@@ -38,7 +38,7 @@ public class FavouritePinsTest {
         favPins.addPin(fountain);
         fountain.setStatus("Broken");
 
-        boolean success = favPins.removeAllBroken();
+        boolean success = favPins.removeAllUnavailable();
 
         assertTrue(success);
         List<Pin> favourites = favPins.searchTag("Water Fountain");
@@ -55,7 +55,7 @@ public class FavouritePinsTest {
         fountain.setStatus("Broken");
         fountain3.setStatus("Broken");
 
-        boolean success = favPins.removeAllBroken();
+        boolean success = favPins.removeAllUnavailable();
 
         List<Pin> favourites = favPins.searchTag("Water Fountain");
 
@@ -71,7 +71,7 @@ public class FavouritePinsTest {
         favPins.addPin(fountain2);
         favPins.addPin(fountain3);
 
-        boolean success = favPins.removeAllBroken();
+        boolean success = favPins.removeAllUnavailable();
 
         List<Pin> favourites = favPins.searchTag("Water Fountain");
 
