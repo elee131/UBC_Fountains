@@ -1,7 +1,6 @@
 package model;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class AllPins implements PinList {
@@ -13,14 +12,15 @@ public class AllPins implements PinList {
 
     }
 
-    // TODO
     // EFFECTS: return pins with matching tag, in no particular order
     @Override
     public List<Pin> searchTag(String tag) {
         List<Pin> pinsWithTag = new ArrayList<Pin>();
 
         for (Pin pin : allPins) {
-            if (pin.getTag() == tag) {
+            String pinTag = pin.getTag();
+
+            if (pinTag.equals(tag)) {
                 pinsWithTag.add(pin);
             }
         }
@@ -28,21 +28,33 @@ public class AllPins implements PinList {
     }
 
 
-    // TODO
-    // EFFECTS: return pin with matching location, in no particular order
+    // EFFECTS: return pins with matching location, in no particular order
     @Override
     public List<Pin> searchLocation(String location) {
 
         List<Pin> pinsInLocation = new ArrayList<Pin>();
 
         for (Pin pin : allPins) {
-            if (pin.getLocation() == location) {
+            String pinLocation = pin.getLocation();
+            if (pinLocation.equals(location)) {
                 pinsInLocation.add(pin);
             }
         }
         return pinsInLocation;
     }
 
+    // EFFECTS: return pin with matching id, null if none match
+    @Override
+    public Pin searchID(String id) {
+        Pin matchingPin = null;
+        for (Pin pin : allPins) {
+            String pinID = pin.getId();
+            if (pinID.equals(id)) {
+                matchingPin = pin;
+            }
+        }
+        return matchingPin;
+    }
 
 
     // MODIFIES: this
@@ -68,6 +80,27 @@ public class AllPins implements PinList {
             return true;
         }
         return false;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: if any pins are labelled "broken" or "unavailable" remove all of those pins and return true
+    // return false otherwise
+    public boolean removeAllUnavailable() {
+        boolean containsUnavailable = false;
+        List<Pin> brokenPins = new ArrayList<>();
+
+        for (Pin pin : allPins) {
+            if ((pin.getStatus() == "Broken") || (pin.getStatus() == "Unavailable")) {
+                containsUnavailable = true;
+                brokenPins.add(pin);
+            }
+        }
+        for (Pin pin : brokenPins) {
+            if (allPins.contains(pin)) {
+                allPins.remove(pin);
+            }
+        }
+        return containsUnavailable;
     }
 
     public List<Pin> getAllPins() {

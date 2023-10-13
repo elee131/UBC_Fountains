@@ -8,6 +8,9 @@ public interface PinList {
 
     List<Pin> searchLocation(String location);
 
+    Pin searchID(String id);
+
     boolean addPin(Pin pin);
+
 
 }

@@ -9,10 +9,17 @@ public interface Pin {
 
     void setDirection(String direction);
 
+    void setLocation(String location);
+
+    void setTag(String tag);
+
+
     String getTag();
 
     String getLocation();
 
 
     String getStatus();
+
+    String getId();
 }

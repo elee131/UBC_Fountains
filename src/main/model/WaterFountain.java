@@ -1,6 +1,6 @@
 package model;
 
-import java.util.List;
+import java.util.UUID;
 
 public class WaterFountain implements Pin {
 
@@ -8,9 +8,7 @@ public class WaterFountain implements Pin {
     private String status;
     private String location; // building codes
     private String directions;
-
-    private PinList allPins = new AllPins();
-
+    private String id;
 
     // REQUIRES: location must be a valid building code (ICCS, CIRS, etc)
     public WaterFountain(String location) {
@@ -18,6 +16,7 @@ public class WaterFountain implements Pin {
         status = "Working";
         tag = "Water Fountain";
         directions = "";
+        id = UUID.randomUUID().toString();
     }
 
     // REQUIRES: input must be valid status;  "Broken" or "working"
@@ -38,8 +37,19 @@ public class WaterFountain implements Pin {
         this.directions = directions;
     }
 
+    @Override
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    @Override
+    public void setTag(String tag) {
+        this.tag = tag;
+
+    }
+
     public boolean isBroken() {
-        return (status == "Broken");
+        return (status.equals("Broken"));
     }
 
     public String getTag() {
@@ -47,14 +57,18 @@ public class WaterFountain implements Pin {
     }
 
     public String getStatus() {
-        return this.status;
+        return status;
     }
 
     public String getLocation() {
-        return this.location;
+        return location;
     }
 
     public String getDirections() {
-        return this.directions;
+        return directions;
+    }
+
+    public String getId() {
+        return id;
     }
 }

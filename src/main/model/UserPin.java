@@ -1,11 +1,13 @@
 package model;
 
+import java.util.UUID;
+
 public class UserPin implements Pin {
     private String tag;
     private String status;
     private String location;
     private String directions;
-    private int id;
+    private String id;
 
 
     public UserPin(String location, String tag) {
@@ -14,7 +16,7 @@ public class UserPin implements Pin {
         this.tag = tag;
         status = "Working";
         directions = "";
-
+        id = UUID.randomUUID().toString();
 
     }
 
@@ -31,6 +33,17 @@ public class UserPin implements Pin {
     @Override
     public void setDirection(String direction) {
         this.directions = direction;
+    }
+
+    @Override
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    @Override
+    public void setTag(String tag) {
+        this.tag = tag;
+
     }
 
     // EFFECTS: return true if status of userPin is "Broken", false otherwise
@@ -57,6 +70,10 @@ public class UserPin implements Pin {
 
     public String getDirections() {
         return directions;
+    }
+
+    public String getId() {
+        return id;
     }
 }
 
