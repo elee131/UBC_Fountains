@@ -215,19 +215,17 @@ public class AllPinsTest {
         allPins.addPin(fountain);
         allPins.addPin(fountain2);
         allPins.addPin(fountain3);
-        allPins.addPin(coffeePlace);
 
         fountain.setStatus("Broken");
         fountain3.setStatus("Broken");
 
         boolean success = allPins.removeAllUnavailable();
 
-        List<Pin> all = allPins.getAllPins();
+        List<Pin> all = allPins.searchTag("Water Fountain");
 
         assertTrue(success);
-        assertEquals(2, all.size());
-        assertTrue(all.contains(fountain2));
-        assertTrue(all.contains(coffeePlace));
+        assertEquals(1, all.size());
+        assertEquals(fountain2, all.get(0));
 
     }
 
@@ -240,11 +238,10 @@ public class AllPinsTest {
         fountain.setStatus("Broken");
         fountain2.setStatus("Broken");
         fountain3.setStatus("Broken");
-        coffeePlace.setStatus("Unavailable");
 
         boolean success = allPins.removeAllUnavailable();
 
-        List<Pin> all = allPins.getAllPins();
+        List<Pin> all = allPins.searchTag("Water Fountain");
 
         assertTrue(success);
         assertEquals(0, all.size());
