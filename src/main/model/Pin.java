@@ -22,4 +22,6 @@ public interface Pin {
     String getStatus();
 
     String getId();
+
+    String getDirections();
 }

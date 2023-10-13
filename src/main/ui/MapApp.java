@@ -5,16 +5,22 @@ import model.*;
 import java.util.List;
 import java.util.Scanner;
 
-// TODO
-// write class level comments
-
+// an interactive map application
+// allPins represent every pin present in the application
+// favPins represent pins the user adds to their personal collection
 public class MapApp {
 
+    private static final String NO_SEARCH_RESULTS = "No search results found :(";
+    private static final String NOTHING_TO_REMOVE = "Nothing here to remove :)";
+    private static final String SUCCESSFUL_REMOVAL = "Poof! It's gone :)";
+    public static final String NOTHING_IN_LIST = "There are no pins here :/";
+
+    public static final String PRINTED_PIN_FORMAT = "Pins are shown in the format 'location, tag, status' with "
+            + "pin ID and direction printed below";
     private Scanner input;
     private Scanner secondInput;
     private String location;
-    private String tag;
-    private String direction;
+
     private AllPins allPins;
     private FavouritePins favPins;
 
@@ -31,10 +37,10 @@ public class MapApp {
 
     // EFFECTS: text menu to let users navigate between options
     private static void displayMenu() {
-        System.out.println("Welcome to UBC fountains!");
+        System.out.println("\nWelcome to UBC fountains!");
         System.out.println("What would you like to do? Press the number key next to the action you would"
                 + " like to perform.");
-        System.out.println("press q to quit at any time.");
+        System.out.println("press q to quit.");
 
         System.out.println("[1] Make new water fountain");
         System.out.println("[2] Make new general pin!");
@@ -51,7 +57,7 @@ public class MapApp {
     // EFFECTS: process user input
     private void runMap() {
         boolean keepGoing = true;
-        String command = null;
+        String command;
 
         init();
 
@@ -90,11 +96,11 @@ public class MapApp {
         }
     }
 
-    // TODO
-    // EFFECTS:
+
+    // EFFECTS: edit the pin if it exists. If not, print a message for the user.
     private void editPinCommand() {
         Pin selected = selectPin();
-        String command = null;
+        String command;
         if (!(selected == null)) {
             System.out.println("What about the Pin would you like to change?");
             System.out.println("[l] location");
@@ -109,8 +115,11 @@ public class MapApp {
         }
     }
 
+    // REQUIRES: command must be one of "l", "s", "t", or "d"
+    // MODIFIES: pin
+    // EFFECTS: edits a pin's field based on the commands passed down from editPinCommand
     private void editPin(String command, Pin pin) {
-        String newInfo = null;
+        String newInfo;
 
         if (command.equals("l")) {
             System.out.println("enter the new location of this pin (nearest UBC building code): ");
@@ -120,7 +129,7 @@ public class MapApp {
         } else if (command.equals("s")) {
             System.out.println("enter the new status of this pin (One of Broken, Unavailable, Working, Available): ");
             newInfo = input.next();
-            pin.setLocation(newInfo);
+            pin.setStatus(newInfo);
 
         } else if (command.equals("t")) {
             System.out.println("enter the new tag of this pin: ");
@@ -135,7 +144,7 @@ public class MapApp {
         }
     }
 
-    // TODO
+
     // EFFECTS: adds the user-selected pin to favourites, if it is not already in the list and if it exists
     private void addToFavourites() {
         Pin selected = selectPin();
@@ -151,8 +160,9 @@ public class MapApp {
         }
     }
 
+    // EFFECTS: processes user input and directs them to the correct remove method
     private void whichListToRemoveFrom() {
-        String command = null;
+        String command;
 
         System.out.println("Which list do you want to remove from?");
         System.out.println("[a] List of all pins");
@@ -167,8 +177,9 @@ public class MapApp {
         }
     }
 
+    // EFFECTS: processes user input and directs them to the correct search method
     private void whichListToSearch() {
-        String command = null;
+        String command;
 
         System.out.println("Which list do you want to search through?");
         System.out.println("[a] List of all pins");
@@ -184,86 +195,132 @@ public class MapApp {
 
     }
 
+    // EFFECTS: print pins' information in allPins with the matching tag. Print a message for the user
+    // if no match is found
     private void tagSearchInAll() {
         List<Pin> searchResult;
         String userInput;
-        System.out.println("Enter the location  you wish to search for: ");
+        System.out.println("Enter the tag you wish to search for: ");
         userInput = input.next();
-        searchResult = allPins.searchLocation(userInput);
+        searchResult = allPins.searchTag(userInput);
+
+        System.out.println(PRINTED_PIN_FORMAT);
         for (Pin pin : searchResult) {
-            System.out.println(pin.getLocation() + "," + pin.getTag() + ","
-                    + pin.getStatus());
+            System.out.println(pin.getLocation() + ", " + pin.getTag() + ", " + pin.getStatus());
+            System.out.println(pin.getId());
+            System.out.println(pin.getDirections());
+        }
+        if (searchResult.isEmpty()) {
+            System.out.println(NO_SEARCH_RESULTS);
         }
     }
 
+    // EFFECTS: print pins' information in allPins with the matching location. Print a message for the user
+    // if no match is found
     private void locationSearchInAll() {
         List<Pin> searchResult;
         String userInput;
-        System.out.println("Enter the location  you wish to search for: ");
+        System.out.println("Enter the location you wish to search for: ");
         userInput = input.next();
         searchResult = allPins.searchLocation(userInput);
+
+        System.out.println(PRINTED_PIN_FORMAT);
+
         for (Pin pin : searchResult) {
-            System.out.println(pin.getLocation() + "," + pin.getTag() + ","
-                    + pin.getStatus());
+            System.out.println(pin.getLocation() + ", " + pin.getTag() + ", " + pin.getStatus());
+            System.out.println(pin.getId());
+            System.out.println(pin.getDirections());
+        }
+        if (searchResult.isEmpty()) {
+            System.out.println(NO_SEARCH_RESULTS);
         }
     }
 
+    // EFFECTS: print pins' information in allPins with the matching id. Print a message for the user
+    // if no match is found
     private void idSearchInAll() {
         Pin idSearchResult;
         String userInput;
         System.out.println("Enter the id of the pin you wish to search for: ");
         userInput = input.next();
         idSearchResult = allPins.searchID(userInput);
+
         if (!(null == idSearchResult)) {
-            System.out.println(idSearchResult.getLocation() + "," + idSearchResult.getTag() + ","
+            System.out.println(PRINTED_PIN_FORMAT);
+            System.out.println(idSearchResult.getLocation() + ", " + idSearchResult.getTag() + ", "
                     + idSearchResult.getStatus());
+            System.out.println(idSearchResult.getId());
+            System.out.println(idSearchResult.getDirections());
         } else {
-            System.out.println("no such result :(");
+            System.out.println(NO_SEARCH_RESULTS);
         }
     }
 
-
+    // EFFECTS: print pins' information in favPins with the matching tag. Print a message for the user
+    // if no match is found
     private void tagSearchInFav() {
         List<Pin> searchResult;
         String userInput;
-        System.out.println("Enter the location you wish to search for: ");
+        System.out.println("Enter the tag you wish to search for: ");
         userInput = input.next();
-        searchResult = favPins.searchLocation(userInput);
+        searchResult = favPins.searchTag(userInput);
+
+        System.out.println(PRINTED_PIN_FORMAT);
+
         for (Pin pin : searchResult) {
-            System.out.println(pin.getLocation() + "," + pin.getTag() + ","
-                    + pin.getStatus());
+            System.out.println(pin.getLocation() + ", " + pin.getTag() + ", " + pin.getStatus());
+            System.out.println(pin.getId());
+            System.out.println(pin.getDirections());
+        }
+        if (searchResult.isEmpty()) {
+            System.out.println(NO_SEARCH_RESULTS);
         }
     }
 
+    // EFFECTS: print pins' information in favPins with the matching location. Print a message for the user
+    // if no match is found
     private void locationSearchInFav() {
         List<Pin> searchResult;
         String userInput;
         System.out.println("Enter the location you wish to search for: ");
         userInput = input.next();
         searchResult = favPins.searchLocation(userInput);
+
+        System.out.println(PRINTED_PIN_FORMAT);
+
         for (Pin pin : searchResult) {
-            System.out.println(pin.getLocation() + "," + pin.getTag() + ","
-                    + pin.getStatus());
+            System.out.println(pin.getLocation() + ", " + pin.getTag() + ", " + pin.getStatus());
+            System.out.println(pin.getId());
+            System.out.println(pin.getDirections());
+        }
+        if (searchResult.isEmpty()) {
+            System.out.println(NO_SEARCH_RESULTS);
         }
     }
 
+    // EFFECTS: print the pin's information in favPins with the matching id. Print a message for the user
+    // if no match is found
     private void idSearchInFav() {
         Pin idSearchResult;
         String userInput;
         System.out.println("Enter the id of the pin you wish to search for: ");
         userInput = input.next();
         idSearchResult = favPins.searchID(userInput);
+
         if (!(null == idSearchResult)) {
-            System.out.println(idSearchResult.getLocation() + "," + idSearchResult.getTag() + ","
+            System.out.println(PRINTED_PIN_FORMAT);
+            System.out.println(idSearchResult.getLocation() + ", " + idSearchResult.getTag() + ", "
                     + idSearchResult.getStatus());
+            System.out.println(idSearchResult.getId());
+            System.out.println(idSearchResult.getDirections());
         } else {
-            System.out.println("no such result :(");
+            System.out.println(NO_SEARCH_RESULTS);
         }
     }
 
     // EFFECTS: processes user command
     private void searchAllCommand() {
-        String command = null;
+        String command;
 
         System.out.println("Which parameter would you like to search by?");
         System.out.println("[l] Location");
@@ -283,7 +340,7 @@ public class MapApp {
 
     // EFFECTS: processes user command
     private void searchFavCommand() {
-        String command = null;
+        String command;
 
         System.out.println("Which parameter would you like to search by?");
         System.out.println("[l] Location");
@@ -306,7 +363,6 @@ public class MapApp {
     // MODIFIES: WaterFountain, AllPins
     // EFFECTS: makes new fountain with given location from input and adds it to list of all pins
     public void makeWaterFountain() {
-        String yesNo = null;
         input = new Scanner(System.in);
         secondInput = new Scanner(System.in);
 
@@ -327,7 +383,7 @@ public class MapApp {
     // MODIFIES: UserPin, AllPins
     // EFFECTS: makes new UserPin with given location and tag from input, adds it to list of all pins
     public void makeUserPin() {
-        String yesNo = null;
+        String tag;
         input = new Scanner(System.in);
         secondInput = new Scanner(System.in);
 
@@ -338,6 +394,7 @@ public class MapApp {
         tag = secondInput.nextLine();
 
         Pin newUserPin = new UserPin(location, tag);
+        allPins.addPin(newUserPin);
         System.out.println("New pin made!");
         maybeAddDirection(newUserPin);
         maybeAddToFav(newUserPin);
@@ -349,8 +406,8 @@ public class MapApp {
     // MODIFIES: favPins
     // EFFECTS: removes pins that match the user's wishes
     public void removeFromFavCommand() {
-        String command = null;
-        String id = null;
+        String command;
+        String id;
         Pin removedPin;
         boolean success = false;
 
@@ -371,16 +428,17 @@ public class MapApp {
         }
 
         if (success) {
-            System.out.println("poof! it's gone :)");
+            System.out.println(SUCCESSFUL_REMOVAL);
         } else {
-            System.out.println("the pin(s) you were looking to remove were not there");
+            System.out.println(NOTHING_TO_REMOVE);
         }
     }
 
-    // TODO
+    // EFFECTS: processes user input and lead them to the appropriate removal method
     public void removeFromAllCommand() {
-        String command = null;
-        String id = null;
+        boolean success = false;
+        String command;
+        String id;
         Pin removedPin;
 
         System.out.println("How do you want to edit your list of pins?");
@@ -390,21 +448,28 @@ public class MapApp {
         command = input.next();
 
         if (command.equals("1")) {
-            allPins.removeAllUnavailable();
+            success = allPins.removeAllUnavailable();
+            favPins.removeAllUnavailable();
         } else if (command.equals("2")) {
             System.out.println("Enter the ID of the pin you wish to remove: ");
             id = secondInput.next();
             removedPin = allPins.searchID(id);
-            allPins.removePin(removedPin);
+            success = allPins.removePin(removedPin);
+            favPins.removePin(removedPin);
+        }
+
+        if (success) {
+            System.out.println(SUCCESSFUL_REMOVAL);
+        } else {
+            System.out.println(NOTHING_TO_REMOVE);
         }
 
     }
 
-    // TODO
-    // MODIFIES: WaterFountain or UserPin
-    // EFFECTS: select a pin based on user input then edit the parameter of the user's choosing of the pin
+
+    // EFFECTS: return a pin with the ID the user provides, if no such pin exists, return null
     public Pin selectPin() {
-        String id = null;
+        String id;
         Pin selected;
 
         System.out.println("Enter the ID of the pin you wish to select: ");
@@ -415,36 +480,62 @@ public class MapApp {
         return selected;
     }
 
-    // EFFECTS: print the favourite pins, listing its location, tag, and status
+    // EFFECTS: print favourite pins, listing its location, tag, status, ID, and direction
     public void viewFavourites() {
-        System.out.println("Pins are shown in the format 'location, tag, status'");
-        for (Pin pin : favPins.getFavPins()) {
-            System.out.println(pin.getLocation() + " ," + pin.getTag() + " ," + pin.getStatus());
-        }
+        List<Pin> pinList = favPins.getFavPins();
+        System.out.println(PRINTED_PIN_FORMAT);
 
-    }
-
-
-    // EFFECTS: print all pins present in the map, listing its location, tag, and status
-    public void viewAll() {
-        System.out.println("Pins are shown in the format 'location, tag, status' with pin ID printed below");
-        for (Pin pin : allPins.getAllPins()) {
-            System.out.println(pin.getLocation() + " ," + pin.getTag() + " ," + pin.getStatus());
+        for (Pin pin : pinList) {
+            System.out.println(pin.getLocation() + ", " + pin.getTag() + ", " + pin.getStatus());
             System.out.println(pin.getId());
+            System.out.println(pin.getDirections());
+        }
+
+        if (pinList.isEmpty()) {
+            System.out.println(NOTHING_IN_LIST);
         }
     }
 
-    // TODO -- add a lil bit more pins to start with
-    // EFFECTS: adds bunch of water fountains to allPins to get users started
-    //
+
+    // EFFECTS: print all pins present in the map, listing its location, tag, status, ID, and direction
+    public void viewAll() {
+        List<Pin> pinList = allPins.getAllPins();
+
+        System.out.println(PRINTED_PIN_FORMAT);
+        for (Pin pin : allPins.getAllPins()) {
+            System.out.println(pin.getLocation() + ", " + pin.getTag() + ", " + pin.getStatus());
+            System.out.println(pin.getId());
+            System.out.println(pin.getDirections());
+        }
+        if (pinList.isEmpty()) {
+            System.out.println(NOTHING_IN_LIST);
+        }
+    }
+
+
+    // MODIFIES: this
+    // EFFECTS: adds a bunch of water fountains and some userPins to allPins to get users started
     public void init() {
         Pin icicsFountain = new WaterFountain("ICCS");
         Pin mcldFountain = new WaterFountain("MCLD");
         Pin lifeFountain = new WaterFountain("LIFE");
+        Pin microwave = new UserPin("NEST", "Microwave");
+        Pin chemFountain = new WaterFountain("CHEM");
+
+        icicsFountain.setDirection("X wing, second floor by the men's bathroom");
+        lifeFountain.setDirection("Second floor, by the men's bathroom. has water bottle filler.");
+
+        microwave.setStatus("Broken");
+        chemFountain.setStatus("Broken");
 
         allPins.addPin(icicsFountain);
         allPins.addPin(mcldFountain);
         allPins.addPin(lifeFountain);
+        allPins.addPin(microwave);
+        allPins.addPin(chemFountain);
+
+        favPins.addPin(mcldFountain);
+        favPins.addPin(microwave);
 
         input = new Scanner(System.in);
         input.useDelimiter("\n");
@@ -471,6 +562,7 @@ public class MapApp {
     // EFFECTS: add directions to newly created pin if user commands it
     // otherwise do nothing
     private void maybeAddDirection(Pin pin) {
+        String direction;
         String yesNo;
         System.out.println("Would you like to add directions? Enter y if yes. Hit any other button if no");
 

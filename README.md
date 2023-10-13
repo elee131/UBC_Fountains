@@ -27,5 +27,7 @@ This map is not an exhaustive list of all fountains around campus. Please add mo
 location, and directions
 - as a user, I want to be able to mark a pin as "unavailable" or "broken"
 - as a user, I want to be able to make edits on a pin's information 
-- as a user, I want to be able to search pins by buildings 
-- as a user, I want to sort pins by status and remove broken ones from favourites
+- as a user, I want to be able to search pins by buildings or tags
+- as a user, I want to be able to remove broken ones from favourites 
+- as a user, I want to be able to view all pins in my favourites and all pins present 
+in the program
