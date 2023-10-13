@@ -16,7 +16,7 @@ public class AllPins implements PinList {
     // EFFECTS: return pins with matching tag, in no particular order
     @Override
     public List<Pin> searchTag(String tag) {
-        List<Pin> pinsWithTag = new ArrayList<Pin>();
+        List<Pin> pinsWithTag = new ArrayList<>();
 
         for (Pin pin : allPins) {
             String pinTag = pin.getTag();
@@ -33,7 +33,7 @@ public class AllPins implements PinList {
     @Override
     public List<Pin> searchLocation(String location) {
 
-        List<Pin> pinsInLocation = new ArrayList<Pin>();
+        List<Pin> pinsInLocation = new ArrayList<>();
 
         for (Pin pin : allPins) {
             String pinLocation = pin.getLocation();
@@ -88,19 +88,18 @@ public class AllPins implements PinList {
     // return false otherwise
     public boolean removeAllUnavailable() {
         boolean containsUnavailable = false;
-        List<Pin> brokenPins = new ArrayList<>();
+        List<Pin> notBrokenPins = new ArrayList<>();
 
         for (Pin pin : allPins) {
-            if ((pin.getStatus() == "Broken") || (pin.getStatus() == "Unavailable")) {
+            String pinStatus = pin.getStatus();
+            if (pinStatus.equals("Broken") || (pinStatus.equals("Unavailable"))) {
                 containsUnavailable = true;
-                brokenPins.add(pin);
+            } else {
+                notBrokenPins.add(pin);
+
             }
         }
-        for (Pin pin : brokenPins) {
-            if (allPins.contains(pin)) {
-                allPins.remove(pin);
-            }
-        }
+        allPins = notBrokenPins;
         return containsUnavailable;
     }
 

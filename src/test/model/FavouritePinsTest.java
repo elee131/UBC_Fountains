@@ -22,6 +22,7 @@ public class FavouritePinsTest {
         fountain2 = new WaterFountain("ESB");
         fountain3 = new WaterFountain("CHEM");
         collegia = new UserPin("LIFE", "Lounge");
+        collegia.setStatus("Available");
 
         favPins = new FavouritePins();
 
@@ -38,14 +39,17 @@ public class FavouritePinsTest {
     @Test
     void removeOnePinBroken() {
         favPins.addPin(fountain);
+        favPins.addPin(collegia);
+
         fountain.setStatus("Broken");
 
         boolean success = favPins.removeAllUnavailable();
 
         assertTrue(success);
-        List<Pin> favourites = favPins.searchTag("Water Fountain");
+        List<Pin> favourites = favPins.getFavPins();
 
-        assertEquals(0, favourites.size());
+        assertEquals(1, favourites.size());
+        assertEquals(collegia, favourites.get(0));
     }
 
     @Test
@@ -53,13 +57,15 @@ public class FavouritePinsTest {
         favPins.addPin(fountain);
         favPins.addPin(fountain2);
         favPins.addPin(fountain3);
+        favPins.addPin(collegia);
 
         fountain.setStatus("Broken");
         fountain3.setStatus("Broken");
+        collegia.setStatus("Unavailable");
 
         boolean success = favPins.removeAllUnavailable();
 
-        List<Pin> favourites = favPins.searchTag("Water Fountain");
+        List<Pin> favourites = favPins.getFavPins();
 
         assertTrue(success);
         assertEquals(1, favourites.size());
@@ -78,7 +84,7 @@ public class FavouritePinsTest {
 
         boolean success = favPins.removeAllUnavailable();
 
-        List<Pin> favourites = favPins.searchTag("Water Fountain");
+        List<Pin> favourites = favPins.getFavPins();
 
         assertTrue(success);
         assertEquals(0, favourites.size());

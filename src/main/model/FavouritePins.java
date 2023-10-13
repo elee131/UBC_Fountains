@@ -19,19 +19,18 @@ public class FavouritePins implements PinList {
     // return false otherwise
     public boolean removeAllUnavailable() {
         boolean containsUnavailable = false;
-        List<Pin> brokenPins = new ArrayList<>();
+        List<Pin> notBrokenPins = new ArrayList<>();
 
         for (Pin pin : favPins) {
-            if ((pin.getStatus() == "Broken") || (pin.getStatus() == "Unavailable")) {
+            String pinStatus = pin.getStatus();
+            if (pinStatus.equals("Broken") || (pinStatus.equals("Unavailable"))) {
                 containsUnavailable = true;
-                brokenPins.add(pin);
+
+            } else {
+                notBrokenPins.add(pin);
             }
         }
-        for (Pin pin : brokenPins) {
-            if (favPins.contains(pin)) {
-                favPins.remove(pin);
-            }
-        }
+        favPins = notBrokenPins;
         return containsUnavailable;
     }
 
@@ -42,7 +41,7 @@ public class FavouritePins implements PinList {
     // EFFECTS: return pins with matching tag, in no particular order
     @Override
     public List<Pin> searchTag(String tag) {
-        List<Pin> pinsWithTag = new ArrayList<Pin>();
+        List<Pin> pinsWithTag = new ArrayList<>();
 
         for (Pin pin : favPins) {
             String pinTag = pin.getTag();
@@ -60,7 +59,7 @@ public class FavouritePins implements PinList {
     @Override
     public List<Pin> searchLocation(String location) {
 
-        List<Pin> pinsInLocation = new ArrayList<Pin>();
+        List<Pin> pinsInLocation = new ArrayList<>();
 
         for (Pin pin : favPins) {
             String pinLocation = pin.getLocation();
@@ -85,7 +84,8 @@ public class FavouritePins implements PinList {
     }
 
     // MODIFIES: this
-    // EFFECTS: adds pin to favourites
+    // EFFECTS: adds pin to favourites and return true if it does not exist already in the list
+    // return false otherwise
     @Override
     public boolean addPin(Pin pin) {
         if (!favPins.contains(pin)) {
@@ -96,7 +96,8 @@ public class FavouritePins implements PinList {
     }
 
     // MODIFIES: this
-    // EFFECTS: removes pin from favourites
+    // EFFECTS: removes pin from favourites and return true if it existed in the list
+    // return false otherwise
     public boolean removePin(Pin pin) {
         if (favPins.contains(pin)) {
             favPins.remove(pin);

@@ -206,9 +206,9 @@ public class AllPinsTest {
         boolean success = allPins.removeAllUnavailable();
 
         assertTrue(success);
-        List<Pin> favourites = allPins.searchTag("Water Fountain");
+        List<Pin> all = allPins.searchTag("Water Fountain");
 
-        assertEquals(0, favourites.size());
+        assertEquals(0, all.size());
     }
 
     @Test
@@ -235,14 +235,16 @@ public class AllPinsTest {
         allPins.addPin(fountain);
         allPins.addPin(fountain2);
         allPins.addPin(fountain3);
+        allPins.addPin(coffeePlace);
 
         fountain.setStatus("Broken");
         fountain2.setStatus("Broken");
         fountain3.setStatus("Broken");
+        coffeePlace.setStatus("Unavailable");
 
         boolean success = allPins.removeAllUnavailable();
 
-        List<Pin> all = allPins.searchTag("Water Fountain");
+        List<Pin> all = allPins.getAllPins();
 
         assertTrue(success);
         assertEquals(0, all.size());
@@ -254,16 +256,18 @@ public class AllPinsTest {
         allPins.addPin(fountain);
         allPins.addPin(fountain2);
         allPins.addPin(fountain3);
+        allPins.addPin(coffeePlace);
 
         boolean success = allPins.removeAllUnavailable();
 
-        List<Pin> favourites = allPins.searchTag("Water Fountain");
+        List<Pin> all = allPins.getAllPins();
 
         assertFalse(success);
-        assertEquals(3, favourites.size());
-        assertEquals(fountain, favourites.get(0));
-        assertEquals(fountain2, favourites.get(1));
-        assertEquals(fountain3, favourites.get(2));
+        assertEquals(4, all.size());
+        assertEquals(fountain, all.get(0));
+        assertEquals(fountain2, all.get(1));
+        assertEquals(fountain3, all.get(2));
+        assertEquals(coffeePlace, all.get(3));
     }
 
     @Test
