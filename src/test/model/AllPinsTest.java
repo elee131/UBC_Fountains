@@ -11,7 +11,6 @@ public class AllPinsTest {
     Pin fountain;
     Pin fountain2;
     Pin fountain3;
-
     Pin coffeePlace;
     Pin lunchSpot;
 
@@ -222,11 +221,30 @@ public class AllPinsTest {
 
         boolean success = allPins.removeAllUnavailable();
 
-        List<Pin> favourites = allPins.searchTag("Water Fountain");
+        List<Pin> all = allPins.searchTag("Water Fountain");
 
         assertTrue(success);
-        assertEquals(1, favourites.size());
-        assertEquals(fountain2, favourites.get(0));
+        assertEquals(1, all.size());
+        assertEquals(fountain2, all.get(0));
+
+    }
+
+    @Test
+    void removeBrokenPinAndAllIsBroken() {
+        allPins.addPin(fountain);
+        allPins.addPin(fountain2);
+        allPins.addPin(fountain3);
+
+        fountain.setStatus("Broken");
+        fountain2.setStatus("Broken");
+        fountain3.setStatus("Broken");
+
+        boolean success = allPins.removeAllUnavailable();
+
+        List<Pin> all = allPins.searchTag("Water Fountain");
+
+        assertTrue(success);
+        assertEquals(0, all.size());
 
     }
 
@@ -245,7 +263,29 @@ public class AllPinsTest {
         assertEquals(fountain, favourites.get(0));
         assertEquals(fountain2, favourites.get(1));
         assertEquals(fountain3, favourites.get(2));
+    }
 
+    @Test
+    void testSetLocation() {
+        fountain.setLocation("Heaven");
+
+        assertEquals("Heaven", fountain.getLocation());
+    }
+
+    @Test
+    void testSetTag() {
+        fountain.setTag("Big Fountain");
+
+        assertEquals("Big Fountain" , fountain.getTag());
+    }
+
+    @Test
+    void testGetAllPins(){
+        allPins.addPin(fountain);
+        List<Pin> all = allPins.getAllPins();
+
+        assertEquals(1, all.size());
+        assertEquals(fountain, all.get(0));
     }
 
 

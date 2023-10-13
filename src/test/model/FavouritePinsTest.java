@@ -65,6 +65,24 @@ public class FavouritePinsTest {
         assertEquals(fountain2, favourites.get(0));
 
     }
+    @Test
+    void removeBrokenPinAndAllIsBroken() {
+        favPins.addPin(fountain);
+        favPins.addPin(fountain2);
+        favPins.addPin(fountain3);
+
+        fountain.setStatus("Broken");
+        fountain2.setStatus("Broken");
+        fountain3.setStatus("Broken");
+
+        boolean success = favPins.removeAllUnavailable();
+
+        List<Pin> favourites = favPins.searchTag("Water Fountain");
+
+        assertTrue(success);
+        assertEquals(0, favourites.size());
+
+    }
 
     @Test
     void removeBrokenButNoneIsBroken() {
@@ -244,7 +262,15 @@ public class FavouritePinsTest {
         boolean success = favPins.removePin(fountain2);
 
         assertFalse(success);
+    }
 
+    @Test
+    void testGetFavPins(){
+        favPins.addPin(fountain);
+        List<Pin> favourites = favPins.getFavPins();
+
+        assertEquals(1, favourites.size());
+        assertEquals(fountain, favourites.get(0));
     }
 
 }

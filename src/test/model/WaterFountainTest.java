@@ -10,7 +10,6 @@ public class WaterFountainTest {
 
     WaterFountain waterFountain;
 
-    FavouritePins favPins;
 
     @BeforeEach
     void runBefore() {
@@ -41,6 +40,13 @@ public class WaterFountainTest {
     void testSetDirection() {
         waterFountain.setDirection("Second floor by the men's bathrooms");
         assertEquals("Second floor by the men's bathrooms", waterFountain.getDirections());
+    }
+
+    @Test
+    void testSetTag() {
+        waterFountain.setTag("Big Fountain");
+
+        assertEquals("Big Fountain" , waterFountain.getTag());
     }
 
 

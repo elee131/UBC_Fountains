@@ -52,5 +52,19 @@ public class UserPinTest {
         assertEquals("To the right of Booster Juice", userPin.getDirections());
     }
 
+    @Test
+    void testSetLocation() {
+        userPin.setLocation("Heaven");
+
+        assertEquals("Heaven", userPin.getLocation());
+    }
+
+    @Test
+    void testSetTag() {
+        userPin.setTag("Big Fountain");
+
+        assertEquals("Big Fountain" , userPin.getTag());
+    }
+
 
 }
