@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+// a collection of pins the user has added to favourites
 public class FavouritePins implements PinList {
 
     List<Pin> favPins;
@@ -53,6 +54,7 @@ public class FavouritePins implements PinList {
 
 
     // EFFECTS: return pins with matching location, in no particular order
+    // if no pins match the location, return empty list
     @Override
     public List<Pin> searchLocation(String location) {
 
@@ -80,7 +82,8 @@ public class FavouritePins implements PinList {
         return matchingPin;
     }
 
-    // TODO
+    // MODIFIES: this
+    // EFFECTS: adds pin to favourites
     @Override
     public boolean addPin(Pin pin) {
         if (!favPins.contains(pin)) {
@@ -90,6 +93,8 @@ public class FavouritePins implements PinList {
         return false;
     }
 
+    // MODIFIES: this
+    // EFFECTS: removes pin from favourites
     public boolean removePin(Pin pin) {
         if (favPins.contains(pin)) {
             favPins.remove(pin);

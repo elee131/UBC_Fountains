@@ -2,12 +2,14 @@ package model;
 
 import java.util.UUID;
 
+// a user-created pin with a tag (a type of feature), status (working, available, broken, unavailable)
+// and directions. A unique id is generated so that the user can select a pin from the console.
 public class UserPin implements Pin {
     private String tag;
     private String status;
     private String location;
     private String directions;
-    private String id;
+    private final String id;
 
 
     public UserPin(String location, String tag) {
@@ -35,11 +37,15 @@ public class UserPin implements Pin {
         this.directions = direction;
     }
 
+    // MODIFIES: this
+    // EFFECTS: changes the pin's location to the input
     @Override
     public void setLocation(String location) {
         this.location = location;
     }
 
+    // MODIFIES: this
+    // EFFECTS: changes the pin's location to the input
     @Override
     public void setTag(String tag) {
         this.tag = tag;
@@ -48,12 +54,12 @@ public class UserPin implements Pin {
 
     // EFFECTS: return true if status of userPin is "Broken", false otherwise
     public boolean isBroken() {
-        return (status == "Broken");
+        return (status.equals("Broken"));
     }
 
     // EFFECTS: return true if status of userPin is "Unavailable", false otherwise
     public boolean isUnavailable() {
-        return (status == "Unavailable");
+        return (status.equals("Unavailable"));
     }
 
     public String getTag() {

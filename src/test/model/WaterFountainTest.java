@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// test class for WaterFountain class
 public class WaterFountainTest {
 
     WaterFountain waterFountain;

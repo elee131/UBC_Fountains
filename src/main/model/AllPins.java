@@ -3,6 +3,7 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+// a collection of pins added to the application
 public class AllPins implements PinList {
 
     List<Pin> allPins;

@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// a test class for UserPin Class
 public class UserPinTest {
 
     UserPin userPin;
