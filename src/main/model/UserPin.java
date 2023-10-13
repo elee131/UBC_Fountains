@@ -12,6 +12,7 @@ public class UserPin implements Pin {
     private final String id;
 
 
+    // EFFECT: constructs a userPin with given tag and location. ID is randomly generated
     public UserPin(String location, String tag) {
 
         this.location = location;

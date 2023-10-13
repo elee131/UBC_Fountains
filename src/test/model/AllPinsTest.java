@@ -6,7 +6,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// a test for allpins class
+// a test for AllPins class
 public class AllPinsTest {
 
     Pin fountain;

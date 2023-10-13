@@ -20,10 +20,8 @@ public class MapApp {
     private Scanner input;
     private Scanner secondInput;
     private String location;
-
     private AllPins allPins;
     private FavouritePins favPins;
-
 
     // EFFECTS: constructs an instance of MapApp with allPins list that encompasses all Pins,
     // and favPins that stores the user's favourite pins. runs the teller application
@@ -97,7 +95,7 @@ public class MapApp {
     }
 
 
-    // EFFECTS: edit the pin if it exists. If not, print a message for the user.
+    // EFFECTS: process user input and edit the selected pin accordingly
     private void editPinCommand() {
         Pin selected = selectPin();
         String command;
@@ -360,7 +358,7 @@ public class MapApp {
 
 
     // REQUIRES: location must be valid building code within UBC
-    // MODIFIES: WaterFountain, AllPins
+    // MODIFIES: this
     // EFFECTS: makes new fountain with given location from input and adds it to list of all pins
     public void makeWaterFountain() {
         input = new Scanner(System.in);
@@ -380,7 +378,7 @@ public class MapApp {
     }
 
     // REQUIRES: location must be valid building code within UBC
-    // MODIFIES: UserPin, AllPins
+    // MODIFIES: this
     // EFFECTS: makes new UserPin with given location and tag from input, adds it to list of all pins
     public void makeUserPin() {
         String tag;
@@ -403,7 +401,7 @@ public class MapApp {
     }
 
     // REQUIRES: favPins is not empty
-    // MODIFIES: favPins
+    // MODIFIES: this
     // EFFECTS: removes pins that match the user's wishes
     public void removeFromFavCommand() {
         String command;
@@ -434,6 +432,8 @@ public class MapApp {
         }
     }
 
+    // REQUIRES: allPins is not empty
+    // MODIFIES: this
     // EFFECTS: processes user input and lead them to the appropriate removal method
     public void removeFromAllCommand() {
         boolean success = false;

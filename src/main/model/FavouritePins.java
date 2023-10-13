@@ -8,7 +8,7 @@ public class FavouritePins implements PinList {
 
     List<Pin> favPins;
 
-
+    // EFFECT: constructs a list for favourites
     public FavouritePins() {
         favPins = new ArrayList<>();
     }

@@ -8,9 +8,9 @@ public class AllPins implements PinList {
 
     List<Pin> allPins;
 
+    // EFFECT: constructs a list for favourites
     public AllPins() {
         allPins = new ArrayList<>();
-
     }
 
     // EFFECTS: return pins with matching tag, in no particular order
