@@ -1,7 +1,6 @@
 package model;
 
 import org.json.JSONObject;
-import persistance.Writable;
 
 import java.util.UUID;
 

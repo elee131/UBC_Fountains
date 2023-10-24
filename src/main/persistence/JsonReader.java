@@ -1,4 +1,4 @@
-package persistance;
+package persistence;
 
 import model.Map;
 
@@ -79,6 +79,7 @@ public class JsonReader {
         String status = jsonObject.getString("status");
         String location = jsonObject.getString("location");
         String directions = jsonObject.getString("direction");
+
         if (tag.equals("Water Fountain")) {
             pin = new WaterFountain(location);
         } else {
@@ -98,6 +99,7 @@ public class JsonReader {
         String status = jsonObject.getString("status");
         String location = jsonObject.getString("location");
         String directions = jsonObject.getString("direction");
+
         if (tag.equals("Water Fountain")) {
             pin = new WaterFountain(location);
         } else {

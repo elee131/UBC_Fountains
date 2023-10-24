@@ -1,7 +1,6 @@
 package model;
 
-import org.json.JSONObject;
-import persistance.Writable;
+import persistence.Writable;
 
 // represents pinned locations on the map
 public interface Pin extends Writable {
