@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONObject;
+import persistance.Writable;
+
 import java.util.UUID;
 
 // a water fountain with a status (working/broken), location (UBC buliding code), and direction
@@ -52,6 +55,23 @@ public class WaterFountain implements Pin {
 
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("tag", tag);
+        json.put("status", status);
+        json.put("location", location);
+        json.put("direction", directions);
+        json.put("id", id);
+        return json;
+    }
+
+    @Override
+    public String toString() {
+        return tag + ": " + status + ": " + location + ": " + directions;
+    }
+
+    // EFFECTS: return true if the pin has the status "broken"
     public boolean isBroken() {
         return (status.equals("Broken"));
     }

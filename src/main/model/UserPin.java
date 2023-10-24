@@ -1,5 +1,8 @@
 package model;
 
+import org.json.JSONObject;
+import persistance.Writable;
+
 import java.util.UUID;
 
 // a user-created pin with a tag (a type of feature), status (working, available, broken, unavailable)
@@ -53,6 +56,17 @@ public class UserPin implements Pin {
 
     }
 
+    @Override
+    public JSONObject toJson() {
+        JSONObject json = new JSONObject();
+        json.put("tag", tag);
+        json.put("status", status);
+        json.put("location", location);
+        json.put("direction", directions);
+        json.put("id", id);
+        return json;
+    }
+
     // EFFECTS: return true if status of userPin is "Broken", false otherwise
     public boolean isBroken() {
         return (status.equals("Broken"));
@@ -61,6 +75,11 @@ public class UserPin implements Pin {
     // EFFECTS: return true if status of userPin is "Unavailable", false otherwise
     public boolean isUnavailable() {
         return (status.equals("Unavailable"));
+    }
+
+    @Override
+    public String toString() {
+        return tag + ": " + status + ": " + location + ": " + directions;
     }
 
     public String getTag() {
@@ -82,5 +101,7 @@ public class UserPin implements Pin {
     public String getId() {
         return id;
     }
+
+
 }
 

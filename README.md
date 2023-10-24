@@ -31,3 +31,5 @@ location, and directions
 - as a user, I want to be able to remove broken ones from favourites 
 - as a user, I want to be able to view all pins in my favourites and all pins present 
 in the program
+- I want to be able to save my pins and favourites to file 
+- I want to be able to load my pins and favourites from file
