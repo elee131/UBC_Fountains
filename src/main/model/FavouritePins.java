@@ -21,6 +21,7 @@ public class FavouritePins implements PinList {
         boolean containsUnavailable = false;
         List<Pin> notBrokenPins = new ArrayList<>();
 
+
         for (Pin pin : favPins) {
             String pinStatus = pin.getStatus();
             if (pinStatus.equals("Broken") || (pinStatus.equals("Unavailable"))) {
@@ -28,6 +29,7 @@ public class FavouritePins implements PinList {
 
             } else {
                 notBrokenPins.add(pin);
+
             }
         }
         favPins = notBrokenPins;
@@ -81,6 +83,14 @@ public class FavouritePins implements PinList {
             }
         }
         return matchingPin;
+    }
+
+    // MODIFIES: this
+    // EFFECTS: adds the list of pins to allPins
+    public void addPins(List<Pin> pinList) {
+        for (Pin pin : pinList) {
+            addPin(pin);
+        }
     }
 
     // MODIFIES: this

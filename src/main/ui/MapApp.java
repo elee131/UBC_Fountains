@@ -2,7 +2,11 @@ package ui;
 
 import model.*;
 
-import java.sql.SQLOutput;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import persistence.JsonReader;
+import persistence.JsonWriter;
+
 import java.util.List;
 import java.util.Scanner;
 
@@ -15,21 +19,29 @@ public class MapApp {
     private static final String NOTHING_TO_REMOVE = "Nothing here to remove :)";
     private static final String SUCCESSFUL_REMOVAL = "Poof! It's gone :)";
     public static final String NOTHING_IN_LIST = "There are no pins here :/";
-
     public static final String PRINTED_PIN_FORMAT = "Pins are shown in the format 'location, tag, status' with "
             + "pin ID and direction printed below";
+    private static final String JSON_STORE = "./data/myMap.json";
+
     private Scanner input;
     private Scanner secondInput;
     private String location;
     private AllPins allPins;
     private FavouritePins favPins;
 
+    private JsonWriter jsonWriter;
+    private JsonReader jsonReader;
+
+    private Map myMap;
+
     // EFFECTS: constructs an instance of MapApp with allPins list that encompasses all Pins,
     // and favPins that stores the user's favourite pins. runs the teller application
     public MapApp() {
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+        myMap = new Map("My Map");
         allPins = new AllPins();
         favPins = new FavouritePins();
-
         runMap();
     }
 
@@ -49,7 +61,7 @@ public class MapApp {
         System.out.println("[6] Remove pins");
         System.out.println("[7] View favourites");
         System.out.println("[8] View all pins");
-        System.out.println("[9] Save map");
+        System.out.println("[9] Save/load map");
 
     }
 
@@ -93,6 +105,49 @@ public class MapApp {
             viewFavourites();
         } else if (command.equals("8")) {
             viewAll();
+        } else if (command.equals("9")) {
+            saveOrLoad();
+        }
+    }
+
+    private void saveOrLoad() {
+        System.out.println("[1] save");
+        System.out.println("[2] load");
+
+        String command = input.next();
+        
+        if (command.equals("1")) {
+            saveState();
+        } else if (command.equals("2")) {
+            loadState();
+        }
+    }
+
+    // EFFECTS: saves the workroom to file
+    private void saveState() {
+        try {
+            myMap.addListOfPinToFav(favPins.getFavPins());
+            myMap.addListOfPinToAll(allPins.getAllPins());
+
+            jsonWriter.open();
+            jsonWriter.write(myMap);
+            jsonWriter.close();
+            System.out.println("Saved " + myMap.getName() + " to " + JSON_STORE);
+        } catch (FileNotFoundException e) {
+            System.out.println("Unable to write to file: " + JSON_STORE);
+        }
+    }
+
+    // MODIFIES: this
+    // EFFECTS: loads workroom from file
+    private void loadState() {
+        try {
+            myMap = jsonReader.read();
+            favPins.addPins(myMap.getFavPins());
+            allPins.addPins(myMap.getAllPins());
+            System.out.println("Loaded " + myMap.getName() + " from " + JSON_STORE);
+        } catch (IOException e) {
+            System.out.println("Unable to read from file: " + JSON_STORE);
         }
     }
 
@@ -151,6 +206,8 @@ public class MapApp {
         boolean success = false;
         if (!(selected == null)) {
             success = favPins.addPin(selected);
+            myMap.addPinToFav(selected);
+
         }
 
         if (success) {
@@ -371,6 +428,8 @@ public class MapApp {
 
         Pin newWaterFountain = new WaterFountain(location);
         allPins.addPin(newWaterFountain);
+
+
         System.out.println("New Fountain pinned!");
         
         maybeAddDirection(newWaterFountain);
@@ -395,6 +454,8 @@ public class MapApp {
 
         Pin newUserPin = new UserPin(location, tag);
         allPins.addPin(newUserPin);
+
+
         System.out.println("New pin made!");
         maybeAddDirection(newUserPin);
         maybeAddToFav(newUserPin);
@@ -419,6 +480,7 @@ public class MapApp {
 
         if (command.equals("1")) {
             success = favPins.removeAllUnavailable();
+
 
         } else if (command.equals("2")) {
             System.out.println("Enter the ID of the pin you wish to remove: ");

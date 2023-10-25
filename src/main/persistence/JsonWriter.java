@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 
+// Code influenced by the JsonSerizalizationDemo https://github.students.cs.ubc.ca/CPSC210/JsonSerializationDemo
+// represents a writer that writes a Json representation of Map to file
 public class JsonWriter {
 
     private static final int TAB = 4;
@@ -26,7 +28,7 @@ public class JsonWriter {
     }
 
     // MODIFIES: this
-    // EFFECTS: writes JSON representation of workroom to file
+    // EFFECTS: writes JSON representation of map to file
     public void write(Map map) {
         JSONObject json = map.toJson();
         saveToFile(json.toString(TAB));

@@ -23,7 +23,7 @@ public interface Pin extends Writable {
     // EFFECTS: change tag of a pin
     void setTag(String tag);
 
-    // EFFECTS: returns string representation of this thingy
+    // EFFECTS: returns string representation of this pin
     String toString();
 
     String getTag();

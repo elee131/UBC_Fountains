@@ -17,13 +17,14 @@ public class Map implements Writable {
 
     List<Pin> favPins;
 
-
+    // EFFECTS: constructs a map of UBC campus with a list of favourite pins and list of all pins
     public Map(String name) {
         this.name = name;
         allPins = new ArrayList<>();
         favPins = new ArrayList<>();
     }
 
+    // EFFECTS: writes the map into a json file with a name, allPins, and favPins
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -33,6 +34,7 @@ public class Map implements Writable {
         return json;
     }
 
+    // EFFECTS: adds the list of favourite pins into JSON file
     private JSONArray allToJson() {
         JSONArray jsonArray = new JSONArray();
 
@@ -43,6 +45,7 @@ public class Map implements Writable {
         return jsonArray;
     }
 
+    // EFFECTS: adds the list of favourite pins into JSON file
     private JSONArray favToJson() {
         JSONArray jsonArray = new JSONArray();
 
@@ -51,6 +54,18 @@ public class Map implements Writable {
         }
 
         return jsonArray;
+    }
+
+    public void addListOfPinToFav(List<Pin> pinList) {
+        for (Pin pin : pinList) {
+            addPinToFav(pin);
+        }
+    }
+
+    public void addListOfPinToAll(List<Pin> pinList) {
+        for (Pin pin : pinList) {
+            addPinToAll(pin);
+        }
     }
 
     // MODIFIES: this
@@ -89,5 +104,6 @@ public class Map implements Writable {
     public int numAll() {
         return allPins.size();
     }
+
 
 }

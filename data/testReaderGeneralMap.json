@@ -19,5 +19,11 @@
     "tag": "Water Fountain",
     "status": "Working",
     "direction": ""
-  }]
+  },
+    {
+      "location": "ICCS",
+      "tag": "Food",
+      "status": "Working",
+      "direction": ""
+    }]
 }

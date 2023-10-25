@@ -56,6 +56,8 @@ public class UserPin implements Pin {
 
     }
 
+
+    // EFFECTS: writes the userPin as a JSON object
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -76,6 +78,7 @@ public class UserPin implements Pin {
         return (status.equals("Unavailable"));
     }
 
+    // EFFECTS: writes the attributes of userPin as a string separated by colons
     @Override
     public String toString() {
         return  location + ": " + tag + ": " + status + ": " + directions;

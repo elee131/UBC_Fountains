@@ -2,6 +2,8 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -291,6 +293,33 @@ public class AllPinsTest {
 
         assertEquals(1, all.size());
         assertEquals(fountain, all.get(0));
+    }
+
+    @Test
+    void testAddPins() {
+        List<Pin> pinList = new ArrayList<>();
+        pinList.add(fountain);
+        pinList.add(coffeePlace);
+        pinList.add(fountain2);
+
+        allPins.addPins(pinList);
+
+        List<Pin> favourites = allPins.getAllPins();
+
+        assertEquals(3, favourites.size());
+        assertEquals(fountain, favourites.get(0));
+        assertEquals(coffeePlace, favourites.get(1));
+        assertEquals(fountain2, favourites.get(2));
+    }
+
+    @Test
+    void testAddPinsEmpty() {
+        List<Pin> pinList = new ArrayList<>();
+        allPins.addPins(pinList);
+
+        List<Pin> favourites = allPins.getAllPins();
+
+        assertEquals(0, favourites.size());
     }
 
 

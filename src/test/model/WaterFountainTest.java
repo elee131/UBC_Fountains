@@ -50,5 +50,10 @@ public class WaterFountainTest {
         assertEquals("Big Fountain" , waterFountain.getTag());
     }
 
+    @Test
+    void testToString() {
+        assertEquals("LIFE: Water Fountain: Working: ", waterFountain.toString());
+    }
+
 
 }

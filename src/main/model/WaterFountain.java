@@ -54,6 +54,7 @@ public class WaterFountain implements Pin {
 
     }
 
+    // EFFECTS: writes waterFountain as a Json object with its attributes
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
@@ -64,6 +65,7 @@ public class WaterFountain implements Pin {
         return json;
     }
 
+    // EFFECTS: writes the attributes of waterFountain as a string separated by colons
     @Override
     public String toString() {
         return  location + ": " + tag + ": " + status + ": " + directions;

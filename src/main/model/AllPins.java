@@ -70,6 +70,14 @@ public class AllPins implements PinList {
         return false;
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds the list of pins to allPins
+    public void addPins(List<Pin> pinList) {
+        for (Pin pin : pinList) {
+            addPin(pin);
+        }
+    }
+
 
 
     // MODIFIES: this

@@ -3,6 +3,8 @@ package model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -278,6 +280,33 @@ public class FavouritePinsTest {
 
         assertEquals(1, favourites.size());
         assertEquals(fountain, favourites.get(0));
+    }
+
+    @Test
+    void testAddPins() {
+        List<Pin> pinList = new ArrayList<>();
+        pinList.add(fountain);
+        pinList.add(collegia);
+        pinList.add(fountain2);
+
+        favPins.addPins(pinList);
+
+        List<Pin> favourites = favPins.getFavPins();
+
+        assertEquals(3, favourites.size());
+        assertEquals(fountain, favourites.get(0));
+        assertEquals(collegia, favourites.get(1));
+        assertEquals(fountain2, favourites.get(2));
+    }
+
+    @Test
+    void testAddPinsEmpty() {
+        List<Pin> pinList = new ArrayList<>();
+        favPins.addPins(pinList);
+
+        List<Pin> favourites = favPins.getFavPins();
+
+        assertEquals(0, favourites.size());
     }
 
 }

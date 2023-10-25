@@ -67,5 +67,10 @@ public class UserPinTest {
         assertEquals("Big Fountain" , userPin.getTag());
     }
 
+    @Test
+    void testToString() {
+        assertEquals("LIFE: Food: Working: ", userPin.toString());
+    }
+
 
 }

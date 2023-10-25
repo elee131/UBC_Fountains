@@ -10,6 +10,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+// a test class for JsonReader class
 public class JsonReaderTest extends JsonTest {
 
     @BeforeEach
@@ -52,10 +53,11 @@ public class JsonReaderTest extends JsonTest {
             List<Pin> mapFavPins = map.getFavPins();
 
             assertEquals(2, mapAllPins.size());
-            assertEquals(1,mapFavPins.size());
+            assertEquals(2,mapFavPins.size());
             checkPin("ICCS", "Food", "Working","", mapAllPins.get(0));
             checkPin("CIRS", "Water Fountain", "Working","", mapAllPins.get(1));
             checkPin("CIRS", "Water Fountain", "Working","", mapFavPins.get(0));
+            checkPin("ICCS", "Food", "Working","", mapFavPins.get(1));
 
         } catch (IOException e) {
             fail("Couldn't read from file");
