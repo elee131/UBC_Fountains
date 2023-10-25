@@ -1,0 +1,67 @@
+{
+    "allPins": [
+        {
+            "location": "ICCS",
+            "tag": "Water Fountain",
+            "status": "Working",
+            "direction": "X wing, second floor by the men's bathroom"
+        },
+        {
+            "location": "MCLD",
+            "tag": "Water Fountain",
+            "status": "Working",
+            "direction": ""
+        },
+        {
+            "location": "LIFE",
+            "tag": "Water Fountain",
+            "status": "Working",
+            "direction": "Second floor, by the men's bathroom. has water bottle filler."
+        },
+        {
+            "location": "NEST",
+            "tag": "Microwave",
+            "status": "Broken",
+            "direction": ""
+        },
+        {
+            "location": "CHEM",
+            "tag": "Water Fountain",
+            "status": "Broken",
+            "direction": ""
+        },
+        {
+            "location": "BIOL",
+            "tag": "FOOD",
+            "status": "Working",
+            "direction": "by the statue thing"
+        },
+        {
+            "location": "BIOL",
+            "tag": "Water Fountain",
+            "status": "Working",
+            "direction": ""
+        }
+    ],
+    "name": "My Map",
+    "favouritePins": [
+        {
+            "location": "MCLD",
+            "tag": "Water Fountain",
+            "status": "Working",
+            "direction": ""
+        },
+        {
+            "location": "NEST",
+            "tag": "Microwave",
+            "status": "Broken",
+            "direction": ""
+        },
+        {
+            "location": "BIOL",
+            "tag": "FOOD",
+            "status": "Working",
+            "direction": "by the statue thing"
+        }
+    ]
+}

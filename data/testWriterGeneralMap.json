@@ -1,0 +1,23 @@
+{
+    "allPins": [
+        {
+            "location": "ICCS",
+            "tag": "Food",
+            "status": "Working",
+            "direction": ""
+        },
+        {
+            "location": "CIRS",
+            "tag": "Water Fountain",
+            "status": "Working",
+            "direction": ""
+        }
+    ],
+    "name": "My New Map",
+    "favouritePins": [{
+        "location": "CIRS",
+        "tag": "Water Fountain",
+        "status": "Working",
+        "direction": ""
+    }]
+}
