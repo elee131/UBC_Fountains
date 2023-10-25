@@ -49,7 +49,7 @@ public class JsonWriterTest extends JsonTest {
     void testWriterGeneralMap() {
         try {
             Map map = new Map("My New Map");
-            map.addPinToAll(new UserPin("ICCS","Food outlet"));
+            map.addPinToAll(new UserPin("ICCS","Food"));
             map.addPinToAll(new WaterFountain("CIRS"));
             map.addPinToFav(new WaterFountain("CIRS"));
             JsonWriter writer = new JsonWriter("./data/testWriterGeneralMap.json");
@@ -65,9 +65,10 @@ public class JsonWriterTest extends JsonTest {
 
             assertEquals(2, mapAllPins.size());
             assertEquals(1, mapFavPins.size());
-            // checkPin("Food outlet", "ICCS", "", "Working", mapAllPins.get(0));
-            checkPin("Water Fountain", "CIRS", "", "Working", mapAllPins.get(1));
-            checkPin("Water Fountain", "CIRS", "", "Working", mapFavPins.get(0));
+
+            checkPin("ICCS", "Food","Working", "", mapAllPins.get(0));
+            checkPin("CIRS","Water Fountain", "Working", "", mapAllPins.get(1));
+            checkPin("CIRS","Water Fountain", "Working","", mapFavPins.get(0));
 
 
         } catch (IOException e) {

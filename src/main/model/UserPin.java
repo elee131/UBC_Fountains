@@ -6,6 +6,7 @@ import java.util.UUID;
 
 // a user-created pin with a tag (a type of feature), status (working, available, broken, unavailable)
 // and directions. A unique id is generated so that the user can select a pin from the console.
+
 public class UserPin implements Pin {
     private String tag;
     private String status;
@@ -58,11 +59,10 @@ public class UserPin implements Pin {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
+        json.put("location", location);
         json.put("tag", tag);
         json.put("status", status);
-        json.put("location", location);
         json.put("direction", directions);
-        json.put("id", id);
         return json;
     }
 
@@ -78,8 +78,9 @@ public class UserPin implements Pin {
 
     @Override
     public String toString() {
-        return tag + ": " + status + ": " + location + ": " + directions;
+        return  location + ": " + tag + ": " + status + ": " + directions;
     }
+
 
     public String getTag() {
         return tag;

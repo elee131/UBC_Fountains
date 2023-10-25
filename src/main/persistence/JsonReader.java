@@ -75,15 +75,15 @@ public class JsonReader {
     // EFFECTS: parses through allPins from JSON object and adds it to workroom
     private void addPinToAll(Map map, JSONObject jsonObject) {
         Pin pin;
+        String location = jsonObject.getString("location");
         String tag = jsonObject.getString("tag");
         String status = jsonObject.getString("status");
-        String location = jsonObject.getString("location");
         String directions = jsonObject.getString("direction");
 
         if (tag.equals("Water Fountain")) {
             pin = new WaterFountain(location);
         } else {
-            pin = new UserPin(tag, location);
+            pin = new UserPin(location, tag);
         }
         pin.setStatus(status);
         pin.setDirection(directions);
@@ -95,15 +95,15 @@ public class JsonReader {
 
     private void addPinToFav(Map map, JSONObject jsonObject) {
         Pin pin;
+        String location = jsonObject.getString("location");
         String tag = jsonObject.getString("tag");
         String status = jsonObject.getString("status");
-        String location = jsonObject.getString("location");
         String directions = jsonObject.getString("direction");
 
         if (tag.equals("Water Fountain")) {
             pin = new WaterFountain(location);
         } else {
-            pin = new UserPin(tag, location);
+            pin = new UserPin(location, tag);
         }
         pin.setStatus(status);
         pin.setDirection(directions);

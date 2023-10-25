@@ -57,17 +57,16 @@ public class WaterFountain implements Pin {
     @Override
     public JSONObject toJson() {
         JSONObject json = new JSONObject();
+        json.put("location", location);
         json.put("tag", tag);
         json.put("status", status);
-        json.put("location", location);
         json.put("direction", directions);
-        json.put("id", id);
         return json;
     }
 
     @Override
     public String toString() {
-        return tag + ": " + status + ": " + location + ": " + directions;
+        return  location + ": " + tag + ": " + status + ": " + directions;
     }
 
     // EFFECTS: return true if the pin has the status "broken"
@@ -76,7 +75,7 @@ public class WaterFountain implements Pin {
     }
 
     public String getTag() {
-        return this.tag;
+        return tag;
     }
 
     public String getStatus() {

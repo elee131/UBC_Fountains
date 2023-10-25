@@ -2,6 +2,7 @@ package ui;
 
 import model.*;
 
+import java.sql.SQLOutput;
 import java.util.List;
 import java.util.Scanner;
 
@@ -48,6 +49,7 @@ public class MapApp {
         System.out.println("[6] Remove pins");
         System.out.println("[7] View favourites");
         System.out.println("[8] View all pins");
+        System.out.println("[9] Save map");
 
     }
 
