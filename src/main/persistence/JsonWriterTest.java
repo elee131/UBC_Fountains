@@ -7,6 +7,7 @@ import model.WaterFountain;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -74,6 +75,54 @@ public class JsonWriterTest extends JsonTest {
         } catch (IOException e) {
             fail("Exception should not have been thrown");
         }
+    }
+
+    @Test
+    void testWriterUpdateMap() {
+        List<Pin> pinList = createPinList();
+
+        try {
+            Map map = new Map("My New Map");
+            map.addListOfPinToAll(pinList);
+            map.addListOfPinToFav(pinList);
+
+            JsonWriter writer = new JsonWriter("./data/testWriterUpdateMap.json");
+            writer.open();
+            writer.write(map);
+            writer.close();
+
+            JsonReader reader = new JsonReader("./data/testWriterUpdateMap.json");
+            map = reader.read();
+            assertEquals("My New Map", map.getName());
+            List<Pin> mapAllPins = map.getAllPins();
+            List<Pin> mapFavPins = map.getFavPins();
+
+            assertEquals(2, mapAllPins.size());
+            assertEquals(2, mapFavPins.size());
+
+            checkPin("ICCS", "Food","Unavailable", "", mapAllPins.get(0));
+            checkPin("CIRS","Water Fountain", "Working", "", mapAllPins.get(1));
+            checkPin("ICCS", "Food","Unavailable", "", mapFavPins.get(0));
+            checkPin("CIRS","Water Fountain", "Working","", mapFavPins.get(1));
+
+
+
+        } catch (IOException e) {
+            fail("Exception should not have been thrown");
+        }
+    }
+
+    private List<Pin> createPinList() {
+        List<Pin> pinList = new ArrayList<>();
+
+        Pin csFood = new UserPin("ICCS", "Food");
+        csFood.setStatus("Unavailable");
+        pinList.add(csFood);
+        pinList.add(new WaterFountain("CIRS"));
+
+
+
+        return pinList;
     }
 
 
