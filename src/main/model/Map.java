@@ -56,26 +56,34 @@ public class Map implements Writable {
         return jsonArray;
     }
 
-    public void addListOfPinToFav(List<Pin> pinList) {
+    // MODIFIES: this
+    // EFFECTS: changes favPins to match the given list
+    public void updateFavToList(List<Pin> pinList) {
+        favPins.clear();
+
         for (Pin pin : pinList) {
             addPinToFav(pin);
         }
     }
 
-    public void addListOfPinToAll(List<Pin> pinList) {
+    // MODIFIES: this
+    // EFFECTS: changes allPins to match the given list
+    public void updateAllToList(List<Pin> pinList) {
+        allPins.clear();
+
         for (Pin pin : pinList) {
             addPinToAll(pin);
         }
     }
 
     // MODIFIES: this
-    // EFFECTS: adds thingy to this workroom
+    // EFFECTS: adds pin to favPins
     public void addPinToFav(Pin pin) {
         favPins.add(pin);
     }
 
     // MODIFIES: this
-    // EFFECTS: adds thingy to this workroom
+    // EFFECTS: adds pin to allPins
     public void addPinToAll(Pin pin) {
         allPins.add(pin);
     }

@@ -83,8 +83,8 @@ public class JsonWriterTest extends JsonTest {
 
         try {
             Map map = new Map("My New Map");
-            map.addListOfPinToAll(pinList);
-            map.addListOfPinToFav(pinList);
+            map.updateAllToList(pinList);
+            map.updateFavToList(pinList);
 
             JsonWriter writer = new JsonWriter("./data/testWriterUpdateMap.json");
             writer.open();

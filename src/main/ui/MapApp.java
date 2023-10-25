@@ -126,8 +126,8 @@ public class MapApp {
     // EFFECTS: saves the workroom to file
     private void saveState() {
         try {
-            myMap.addListOfPinToFav(favPins.getFavPins());
-            myMap.addListOfPinToAll(allPins.getAllPins());
+            myMap.updateFavToList(favPins.getFavPins());
+            myMap.updateAllToList(allPins.getAllPins());
 
             jsonWriter.open();
             jsonWriter.write(myMap);
