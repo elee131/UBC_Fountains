@@ -34,7 +34,7 @@ public class Map implements Writable {
         return json;
     }
 
-    // EFFECTS: adds the list of favourite pins into JSON file
+    // EFFECTS: adds the list of all pins into JSON file
     private JSONArray allToJson() {
         JSONArray jsonArray = new JSONArray();
 

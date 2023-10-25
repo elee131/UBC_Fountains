@@ -110,6 +110,7 @@ public class MapApp {
         }
     }
 
+    // EFFECTS: provides a menu to let the user choose to either save or load
     private void saveOrLoad() {
         System.out.println("[1] save");
         System.out.println("[2] load");
@@ -123,6 +124,7 @@ public class MapApp {
         }
     }
 
+    // MODIFIES: myMap
     // EFFECTS: saves the workroom to file
     private void saveState() {
         try {
