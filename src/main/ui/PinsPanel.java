@@ -1,5 +1,7 @@
 package ui;
 
+import model.Map;
+
 import javax.swing.*;
 
 // represents the panel shown when selecting a pin
@@ -9,7 +11,7 @@ public class PinsPanel extends  JPanel {
     private ImageIcon pin;
 
     // TODO represents the panel shown when a pin is clicked on
-    public PinsPanel(MapApp map) {
+    public PinsPanel(Map map) {
         // somehow use map to get the pins ?? idk
         // uuhhh what do i dooo
     }

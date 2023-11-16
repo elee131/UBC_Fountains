@@ -1,6 +1,8 @@
 package ui;
 
 
+import model.Map;
+
 import javax.swing.*;
 
 // represents the menu the users can navigate through to find actions they would like to perform
@@ -17,7 +19,7 @@ public class MenuPanel extends JPanel {
     private JMenuItem save;
     private JMenuItem load;
 
-    public MenuPanel() {
+    public MenuPanel(Map map) {
         mainMenu = new JMenu();
         isActive = false;
 
