@@ -4,10 +4,14 @@ import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collection;
@@ -28,6 +32,8 @@ public class MapGUI extends JFrame implements MouseListener {
     protected static AllPins allPins;
     protected static FavouritePins favPins;
 
+    private Image bg;
+
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
@@ -47,18 +53,25 @@ public class MapGUI extends JFrame implements MouseListener {
         setSize(INITIAL_SCREEN_WIDTH, INITIAL_SCREEN_HEIGHT);
 
         loadImages();
-        bgPanel = new JPanel() {
-            @Override
-            protected void paintComponent(Graphics g) {
-                Image img = mapBackground.getImage();
-                img.getScaledInstance(INITIAL_SCREEN_WIDTH, INITIAL_SCREEN_HEIGHT, img.SCALE_SMOOTH);
+//        bgPanel = new JPanel() {
+//            @Override
+//            protected void paintComponent(Graphics g) {
+//                Image img = mapBackground.getImage();
+//                img.getScaledInstance(INITIAL_SCREEN_WIDTH, INITIAL_SCREEN_HEIGHT, img.SCALE_SMOOTH);
+//
+//                setLayout(null);
+//                g.drawImage(img, 0, 0,INITIAL_SCREEN_WIDTH, INITIAL_SCREEN_HEIGHT, null);
+//            }
+//        };
 
-                setLayout(null);
-                g.drawImage(img, 0, 0,INITIAL_SCREEN_WIDTH, INITIAL_SCREEN_HEIGHT, null);
-            }
-        };
+        Image img = mapBackground.getImage();
 
-        this.add(bgPanel);
+
+        // BufferedImage myImage = ImageIO.read(img);
+        this.setContentPane(new BackgroundPanel(
+                img.getScaledInstance(INITIAL_SCREEN_WIDTH, INITIAL_SCREEN_HEIGHT, img.SCALE_SMOOTH)));
+
+        //this.add(bgPanel);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(false);
@@ -67,8 +80,11 @@ public class MapGUI extends JFrame implements MouseListener {
         initializeFields();
         menuPanel = new JMenuBar();
         buildMenu(menuPanel);
-        this.add(menuPanel, BorderLayout.PAGE_START);
+        setLayout(new BorderLayout());
+        this.add(menuPanel, BorderLayout.NORTH);
 
+//        JPanel panel = new PinsPanel();
+//        this.add(panel, BorderLayout.CENTER);
 
     }
 
@@ -85,6 +101,11 @@ public class MapGUI extends JFrame implements MouseListener {
         JMenu main = new JMenu("Main Menu");
         menuPanel.add(main, BorderLayout.PAGE_START);
         JMenuItem subMenu = new JMenuItem("Search");
+        subMenu.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                new PinsPanel();
+            }
+        });
         main.add(subMenu);
     }
 

@@ -5,6 +5,7 @@ import model.UserPin;
 import model.WaterFountain;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -25,13 +26,18 @@ public class PinsPanel extends  JPanel {
 
     // TODO represents the panel shown when a pin is clicked on
     public PinsPanel() {
-        setVisible(true);
+        setBackground(Color.gray);
+        setSize(500,500);
+
         userPin = new JButton("Your own pin");
         buildUserPinPanel(userPin);
 
         waterFountain = new JButton();
         buildWaterFountainPanel(waterFountain);
 
+        this.add(userPin);
+        this.add(waterFountain);
+        setVisible(true);
     }
 
     private void buildUserPinPanel(JButton button) {
