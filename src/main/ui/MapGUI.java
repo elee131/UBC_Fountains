@@ -1,44 +1,42 @@
 package ui;
 
-import model.AllPins;
-import model.FavouritePins;
-import model.Map;
+import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.HashMap;
 
 // TODO - bring in every functionality from mapApp into MapGUI
 // represents the main screen of the application with a map that displays pins
-public class MapGUI extends JFrame {
+public class MapGUI extends JFrame implements MouseListener {
 
     private static final int INITIAL_SCREEN_WIDTH = 1500;
     public static final int INITIAL_SCREEN_HEIGHT = 1000;
-
-    boolean isActive;
-    private PinsPanel pinsPanel;
-    private MenuPanel menuPanel;
-
+    public static final double PIN_WIDTH_HEIGHT = 50;
+    private static final String JSON_STORE = "./data/myMap.json";
     private ImageIcon mapBackground;
     private ImageIcon waterFountainIcon;
-
     private ImageIcon pinIcon;
-    private Map myMap;
 
-    private AllPins allPins;
-
-    private FavouritePins favPins;
+    protected static AllPins allPins;
+    protected static FavouritePins favPins;
 
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
-    private static final String JSON_STORE = "./data/myMap.json";
+    private Map myMap;
+    private HashMap<Point, Pin> pinPoints;
 
-    private JLabel myLabel;
+    private JMenuBar menuPanel;
     private JPanel bgPanel;
+    private PinsPanel panel;
 
 
 
@@ -49,8 +47,6 @@ public class MapGUI extends JFrame {
         setSize(INITIAL_SCREEN_WIDTH, INITIAL_SCREEN_HEIGHT);
 
         loadImages();
-//        myLabel = new JLabel(mapBackground);
-//        add(myLabel);
         bgPanel = new JPanel() {
             @Override
             protected void paintComponent(Graphics g) {
@@ -68,19 +64,28 @@ public class MapGUI extends JFrame {
         setUndecorated(false);
         setVisible(true);
 
-        allPins = new AllPins();
-        favPins = new FavouritePins();
-        jsonWriter = new JsonWriter(JSON_STORE);
-        jsonReader = new JsonReader(JSON_STORE);
-        isActive = true;
-        pinsPanel = new PinsPanel(myMap);
-        menuPanel = new MenuPanel(myMap);
+        initializeFields();
+        menuPanel = new JMenuBar();
+        buildMenu(menuPanel);
+        this.add(menuPanel, BorderLayout.PAGE_START);
+
+
     }
 
+    private void initializeFields() {
+        favPins = new FavouritePins();
+        allPins = new AllPins();
+        jsonWriter = new JsonWriter(JSON_STORE);
+        jsonReader = new JsonReader(JSON_STORE);
+        pinPoints = new HashMap();
 
-    // TODO finds the place where the user clicked and decides what to do from there
-    public void keyHandler() {
+    }
 
+    private void buildMenu(JMenuBar menuPanel) {
+        JMenu main = new JMenu("Main Menu");
+        menuPanel.add(main, BorderLayout.PAGE_START);
+        JMenuItem subMenu = new JMenuItem("Search");
+        main.add(subMenu);
     }
 
     // TODO allows the user to navigate around map by dragging mouse cursor ** least priority
@@ -102,37 +107,10 @@ public class MapGUI extends JFrame {
 
 
     // TODO display help menu somewhere on screen with instructions??
-    // might not do it tbh
-    public void helpMenu() {
-
-    }
-
-    public void paintComponent(Graphics g) {
-        Image img = mapBackground.getImage();
-        Dimension size = new Dimension(img.getWidth(null), img.getHeight(null));
-        setPreferredSize(size);
-        setMinimumSize(size);
-        setMaximumSize(size);
-        setSize(size);
-        setLayout(null);
-        g.drawImage(img, 0, 0, null);
-
-    }
-
-
-    // TODO import images for the gui -- did i do it right???? idk
-    private void loadImages() {
-        String sep = System.getProperty("file.separator");
-
-        mapBackground = new ImageIcon(System.getProperty("user.dir") + sep
-                + "images" + sep + "ubc-campus-map.png");
-
-        waterFountainIcon = new ImageIcon(System.getProperty("user.dir") + sep
-                + "images" + sep + "yellow.png");
-
-        pinIcon = new ImageIcon(System.getProperty("user.dir") + sep
-                + "images" + sep + "yellow.png");
-    }
+//     might not do it tbh
+//    public void helpMenu() {
+//
+//    }
 
     // TODO represents the warning pop up message for the viewer when they do something thats not allowed
     // handles exceptions thrown from keyHandler mostly
@@ -167,5 +145,85 @@ public class MapGUI extends JFrame {
         } catch (IOException e) {
             System.out.println("Unable to read from file: " + JSON_STORE);
         }
+    }
+
+    // search through the hashmap
+    // EFFECTS: checks if the user has clicked on a pin. return pin if the user has, null otherwise
+    public Pin clickedPin(Point p) {
+        Pin selected = null;
+        double posX = p.getX();
+        double posY = p.getY();
+
+        Collection<Point> points = pinPoints.keySet();
+
+        for (Point point: points) {
+            double dx = Math.abs(posX - point.getX());
+            double dy = Math.abs(posY - point.getY());
+
+            if ((dx <= PIN_WIDTH_HEIGHT) && (dy <= PIN_WIDTH_HEIGHT)) {
+                selected = pinPoints.get(point);
+            }
+        }
+
+        return selected; // stub
+    }
+
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        Point point = e.getPoint();
+        Pin selected = clickedPin(point);
+        if (selected != null) {
+            selected.getStatus(); // -- stub
+        } else {
+            PinsPanel panel = new PinsPanel();
+            if (panel.constructed()) {
+                pinPoints.put(point, panel.getPin());
+                addPin(panel.getPin());
+            }
+
+        }
+    }
+
+    public void addPin(Pin pin) {
+        JLabel waterFountain = new JLabel(waterFountainIcon);
+        add(waterFountain);
+    }
+
+
+
+
+    private void loadImages() {
+        String sep = System.getProperty("file.separator");
+
+        mapBackground = new ImageIcon(System.getProperty("user.dir") + sep
+                + "images" + sep + "ubc-campus-map.png");
+
+        waterFountainIcon = new ImageIcon(System.getProperty("user.dir") + sep
+                + "images" + sep + "WaterFountain.png");
+
+        pinIcon = new ImageIcon(System.getProperty("user.dir") + sep
+                + "images" + sep + "UserPin.png");
+    }
+
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
     }
 }

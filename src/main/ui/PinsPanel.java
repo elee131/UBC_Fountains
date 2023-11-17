@@ -1,19 +1,106 @@
 package ui;
 
-import model.Map;
+import model.Pin;
+import model.UserPin;
+import model.WaterFountain;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 // represents the panel shown when selecting a pin
 public class PinsPanel extends  JPanel {
+    Pin madePin;
 
-    private ImageIcon waterFountain;
-    private ImageIcon pin;
+    JButton userPin;
+    JButton waterFountain;
+
+    JButton submit;
+    JTextField location;
+    JTextField tag;
+    JTextField direction;
+    JTextField status;
+
+
 
     // TODO represents the panel shown when a pin is clicked on
-    public PinsPanel(Map map) {
-        // somehow use map to get the pins ?? idk
-        // uuhhh what do i dooo
+    public PinsPanel() {
+        setVisible(true);
+        userPin = new JButton("Your own pin");
+        buildUserPinPanel(userPin);
+
+        waterFountain = new JButton();
+        buildWaterFountainPanel(waterFountain);
+
+    }
+
+    private void buildUserPinPanel(JButton button) {
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                tag = new JTextField();
+                location = new JTextField();
+                status = new JTextField();
+                direction = new JTextField();
+
+                submit = new JButton("submit");
+                submit.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        waterFountain = new JButton("Water fountain");
+                        madePin = new UserPin(location.getText(), tag.getText());
+                        madePin.setStatus(status.getText());
+                        madePin.setDirection(direction.getText());
+                        MapGUI.allPins.addPin(madePin);
+                    }
+                });
+            }
+        });
+        setVisible(true);
+    }
+
+    private void buildWaterFountainPanel(JButton button) {
+        setVisible(true);
+
+        button.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                location = new JTextField();
+                status = new JTextField();
+                direction = new JTextField();
+
+                submit = new JButton("submit");
+                submit.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        waterFountain = new JButton("Water fountain");
+                        madePin = new WaterFountain(location.getText());
+                        madePin.setStatus(status.getText());
+                        madePin.setDirection(direction.getText());
+                        MapGUI.allPins.addPin(madePin);
+
+                    }
+                });
+            }
+        });
+    }
+
+
+
+    public PinsPanel(Pin pin) {
+        tag = new JTextField(pin.getTag());
+        location = new JTextField(pin.getLocation());
+        status = new JTextField(pin.getStatus());
+        direction = new JTextField(pin.getDirections());
+
+        submit = new JButton("Submit");
+        submit.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                waterFountain = new JButton("Water fountain");
+                madePin = new WaterFountain(location.getText());
+                madePin.setStatus(status.getText());
+                madePin.setDirection(direction.getText());
+                MapGUI.allPins.addPin(madePin);
+
+            }
+        });
+
     }
 
     // TODO represents the edit button that lets you edit info
@@ -37,14 +124,15 @@ public class PinsPanel extends  JPanel {
 
     }
 
-
-
-
-    // TODO import images for the gui
-    private void loadImages() {
-        String sep = System.getProperty("file.separator");
-
-        waterFountain = new ImageIcon(System.getProperty("user.dir") + sep
-                + "images" + sep + "yellow.png");
+    // TODO return true if user has clicked the confirm button to make the pin in given location
+    public boolean constructed() {
+        return false;
     }
+
+    // todo -- return the pin made from the user action
+    public Pin getPin() {
+        return madePin;
+    }
+
+
 }
