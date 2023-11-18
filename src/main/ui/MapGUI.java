@@ -4,18 +4,17 @@ import model.*;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
-import java.awt.image.BufferedImage;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashMap;
+
 
 // TODO - bring in every functionality from mapApp into MapGUI
 // represents the main screen of the application with a map that displays pins
@@ -25,57 +24,43 @@ public class MapGUI extends JFrame implements MouseListener {
     public static final int INITIAL_SCREEN_HEIGHT = 1000;
     public static final double PIN_WIDTH_HEIGHT = 50;
     private static final String JSON_STORE = "./data/myMap.json";
-    private ImageIcon mapBackground;
+    private static ImageIcon mapBackground;
+
+    protected static JFrame container;
+
     private ImageIcon waterFountainIcon;
     private ImageIcon pinIcon;
 
     protected static AllPins allPins;
     protected static FavouritePins favPins;
-
-    private Image bg;
-
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
     private Map myMap;
-    private HashMap<Point, Pin> pinPoints;
+    protected static HashMap<Point, Pin> pinPoints;
 
     private JMenuBar menuPanel;
-    private JPanel bgPanel;
-    private PinsPanel panel;
+
+
+    private PinMakerPopup popUp;
 
 
 
     // TODO
-    // all ripped from spaceinvaders
     public MapGUI() {
         super("UBC fountains");
         setSize(INITIAL_SCREEN_WIDTH, INITIAL_SCREEN_HEIGHT);
 
         loadImages();
-//        bgPanel = new JPanel() {
-//            @Override
-//            protected void paintComponent(Graphics g) {
-//                Image img = mapBackground.getImage();
-//                img.getScaledInstance(INITIAL_SCREEN_WIDTH, INITIAL_SCREEN_HEIGHT, img.SCALE_SMOOTH);
-//
-//                setLayout(null);
-//                g.drawImage(img, 0, 0,INITIAL_SCREEN_WIDTH, INITIAL_SCREEN_HEIGHT, null);
-//            }
-//        };
-
         Image img = mapBackground.getImage();
 
-
-        // BufferedImage myImage = ImageIO.read(img);
         this.setContentPane(new BackgroundPanel(
                 img.getScaledInstance(INITIAL_SCREEN_WIDTH, INITIAL_SCREEN_HEIGHT, img.SCALE_SMOOTH)));
-
-        //this.add(bgPanel);
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setUndecorated(false);
         setVisible(true);
+        setLayout(null);
 
         initializeFields();
         menuPanel = new JMenuBar();
@@ -83,31 +68,151 @@ public class MapGUI extends JFrame implements MouseListener {
         setLayout(new BorderLayout());
         this.add(menuPanel, BorderLayout.NORTH);
 
+        pinPoints.put(new Point(200, 300), new UserPin("ICCS", "Water"));
+        pinPoints.put(new Point(1, 800), new WaterFountain("ICCS"));
+
+        displayPin();
+        this.addMouseListener(this);
+
 //        JPanel panel = new PinsPanel();
 //        this.add(panel, BorderLayout.CENTER);
 
+//        popUp = new JOptionPane("popup window test");
+//        popUp.setVisible(true);
+//        this.add(popUp, BorderLayout.CENTER);
+
+//        popUp = new PinEditPopup();
+//        this.add(popUp);
+
+        popUp = new PinMakerPopup();
+
+        setVisible(true);
+
     }
 
+    // EFFECTS: initialize all fields for the constructor
     private void initializeFields() {
         favPins = new FavouritePins();
         allPins = new AllPins();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         pinPoints = new HashMap();
+        container = new JFrame();
+        container.setSize(300,300);
 
     }
 
+    // EFFECTS: builds the menu bar the user can use to navigate the program
     private void buildMenu(JMenuBar menuPanel) {
         JMenu main = new JMenu("Main Menu");
         menuPanel.add(main, BorderLayout.PAGE_START);
-        JMenuItem subMenu = new JMenuItem("Search");
-        subMenu.addActionListener(new ActionListener() {
+
+        JMenuItem search = new JMenuItem("Search");
+//        search.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                generateSearchPanel();
+//            }
+//        });
+
+        JMenuItem favourites = new JMenuItem("Favourites");
+//        favourites.addActionListener(new ActionListener() {
+//            public void actionPerformed(ActionEvent e) {
+//                displayFavs();
+//            }
+//        });
+//
+        JMenuItem printAllPins = new JMenuItem("Print allPins");
+        printAllPins.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                new PinsPanel();
+                for (Pin pin : allPins.getAllPins()) {
+                    System.out.println(pin.getTag() + pin.getLocation() + pin.getStatus());
+                }
             }
+
         });
-        main.add(subMenu);
+
+        main.add(search);
+        main.add(favourites);
+        main.add(printAllPins);
+        main.setVisible(true);
+        menuPanel.setVisible(true);
     }
+
+    private void displayFavs() {
+
+        java.util.List<Pin> favs = favPins.getFavPins();
+
+
+        for (Point point : pinPoints.keySet()) {
+            JLabel pin;
+
+            if (!favs.contains(pinPoints.get(point))) {
+                continue;
+            }
+
+            if (pinPoints.get(point).getTag().equals("Water Fountain")) {
+                pin = new JLabel(waterFountainIcon);
+            } else {
+                pin = new JLabel(pinIcon);
+            }
+
+            this.add(pin);
+            pin.setBounds((int) point.getX(), (int) point.getY(), 50, 50);
+
+        }
+
+    }
+
+    private void displayAll() {
+
+        java.util.List<Pin> all = allPins.getAllPins();
+
+        for (Point point : pinPoints.keySet()) {
+            JLabel pin;
+
+            if (pinPoints.get(point).getTag().equals("Water Fountain")) {
+                pin = new JLabel(waterFountainIcon);
+            } else {
+                pin = new JLabel(pinIcon);
+            }
+
+            this.add(pin);
+            pin.setBounds((int) point.getX(), (int) point.getY(), 50, 50);
+
+        }
+    }
+
+
+
+    private void generateSearchPanel() {
+
+//        JTextField tag;
+//        JTextField location;
+//
+//        Object[] textFields = {
+//                "Tag: ", tag,
+//                "Location: ", location,
+//
+//        };
+//
+//        JOptionPane search = new JOptionPane();
+//        JFrame container = new JFrame();
+//        container.setSize(300, 300);
+//        int option =
+//        JOptionPane.showConfirmDialog(container, textFields, "Create new Pin", JOptionPane.OK_CANCEL_OPTION);
+//
+//        if (option == 0) {
+//            createWaterFountain();
+//        } else if (option == 1) {
+//            createUserPin();
+//        }
+
+    }
+
+    private void displaySearchResult() {
+
+    }
+
 
     // TODO allows the user to navigate around map by dragging mouse cursor ** least priority
     public void moveAround() {
@@ -123,6 +228,19 @@ public class MapGUI extends JFrame implements MouseListener {
     // TODO displays pins if they should be ex. if its in fav when viewfav is selected
     // or if its part of the search results
     public void displayPin() {
+
+        for (Point point : pinPoints.keySet()) {
+            JLabel pin;
+            if (pinPoints.get(point).getTag().equals("Water Fountain")) {
+                pin = new JLabel(waterFountainIcon);
+            } else {
+                pin = new JLabel(pinIcon);
+            }
+
+            this.add(pin);
+            pin.setBounds((int) point.getX(), (int) point.getY(), 50, 50);
+
+        }
 
     }
 
@@ -194,15 +312,19 @@ public class MapGUI extends JFrame implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         Point point = e.getPoint();
         Pin selected = clickedPin(point);
-        if (selected != null) {
-            selected.getStatus(); // -- stub
-        } else {
-            PinsPanel panel = new PinsPanel();
-            if (panel.constructed()) {
-                pinPoints.put(point, panel.getPin());
-                addPin(panel.getPin());
-            }
 
+        if (selected != null) {
+            Pin chosen = pinPoints.get(point);
+            if (chosen.getTag().equals("Water Fountain")) {
+                JOptionPane editor = new PinEditPopup((WaterFountain) chosen);
+                this.add(editor);
+            } else {
+                JOptionPane editor = new PinEditPopup((UserPin) chosen);
+                this.add(editor);
+            }
+        } else {
+            JOptionPane pinMaker = new PinMakerPopup();
+            this.add(pinMaker);
         }
     }
 
@@ -213,7 +335,7 @@ public class MapGUI extends JFrame implements MouseListener {
 
 
 
-
+    // EFFECTS: loads images from the images folder
     private void loadImages() {
         String sep = System.getProperty("file.separator");
 
@@ -225,6 +347,8 @@ public class MapGUI extends JFrame implements MouseListener {
 
         pinIcon = new ImageIcon(System.getProperty("user.dir") + sep
                 + "images" + sep + "UserPin.png");
+
+
     }
 
 
