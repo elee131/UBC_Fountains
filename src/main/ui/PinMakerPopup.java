@@ -2,11 +2,15 @@ package ui;
 
 import javax.swing.*;
 
-import static ui.MapGUI.container;
+import java.awt.*;
 
-public class PinMakerPopup extends JOptionPane {
+
+
+public class PinMakerPopup {
 
     int option;
+
+    JOptionPane pinMakerScreen;
 
     Object[] pinOptions = {
             "Mark a water fountain!",
@@ -14,22 +18,32 @@ public class PinMakerPopup extends JOptionPane {
             "Cancel"
     };
 
-    public PinMakerPopup() {
+    public PinMakerPopup(Point point, MapGUI mapGUI) {
+        JFrame container = new JFrame();
+        pinMakerScreen = new JOptionPane();
         container.setSize(300,300);
-        option = JOptionPane.showOptionDialog(container,
+        option = pinMakerScreen.showOptionDialog(mapGUI,
                 "What Type of Pin Would You Like?",
                 "Create A Pin!",
-                JOptionPane.YES_NO_CANCEL_OPTION,
-                JOptionPane.QUESTION_MESSAGE,
+                pinMakerScreen.YES_NO_CANCEL_OPTION,
+                pinMakerScreen.QUESTION_MESSAGE,
                 null,
                 pinOptions,
                 pinOptions[2]);
 
         if (option == 0) {
-            new PinEditPopup("waterFountain");
+            new PinEditPopup("waterFountain", point);
         } else if (option == 1) {
-            new PinEditPopup("userPin");
+            new PinEditPopup("userPin", point);
+        } else if (option == JOptionPane.CANCEL_OPTION || option == JOptionPane.CLOSED_OPTION) {
+            //
         }
+
+
+
     }
 
+    public JOptionPane getPinMakerScreen() {
+        return pinMakerScreen;
+    }
 }

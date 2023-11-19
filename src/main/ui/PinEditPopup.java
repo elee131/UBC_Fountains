@@ -8,8 +8,9 @@ import static ui.MapGUI.container;
 
 import javax.swing.*;
 import javax.swing.JOptionPane;
+import java.awt.*;
 
-
+// represents the popup when creating or editing a pin
 public class PinEditPopup extends JOptionPane {
 
 
@@ -21,7 +22,7 @@ public class PinEditPopup extends JOptionPane {
 
 
     // REQUIRES: string can only be one of "waterFountain" or "userPin"
-    public PinEditPopup(String str) {
+    public PinEditPopup(String str, Point point) {
 
         if (str.equals("waterFountain")) {
             tag = new JTextField("Water Fountain");
@@ -42,12 +43,14 @@ public class PinEditPopup extends JOptionPane {
         option = JOptionPane.showConfirmDialog(container, textFields, "Create new Pin", JOptionPane.OK_CANCEL_OPTION);
 
         if (option == 0) {
-            createWaterFountain();
+            createWaterFountain(point);
         } else if (option == 1) {
-            createUserPin();
+            createUserPin(point);
+        } else {
+            container.dispose();
         }
 
-
+        container.dispose();
     }
 
     public PinEditPopup(UserPin pin) {
@@ -63,11 +66,15 @@ public class PinEditPopup extends JOptionPane {
                 "Direction: ", direction
         };
 
-        container = new JFrame();
-        container.setSize(300, 300);
         option = JOptionPane.showConfirmDialog(container, textFields, "Edit Pin", JOptionPane.OK_CANCEL_OPTION);
 
-        editUserPin(pin);
+        if (option == JOptionPane.OK_OPTION) {
+            editUserPin(pin);
+        } else {
+            container.dispose();
+        }
+        
+        container.dispose();
     }
 
     public PinEditPopup(WaterFountain pin) {
@@ -86,6 +93,9 @@ public class PinEditPopup extends JOptionPane {
         option = JOptionPane.showConfirmDialog(container, textFields, "Edit Fountain", JOptionPane.OK_CANCEL_OPTION);
 
         editWaterFountain(pin);
+
+        container.dispose();
+
     }
 
 
@@ -107,23 +117,25 @@ public class PinEditPopup extends JOptionPane {
 
     }
 
-    public void createUserPin() {
+    public void createUserPin(Point point) {
 
         UserPin newPin = new UserPin(tag.getText(), location.getText());
         newPin.setStatus(status.getText());
         newPin.setDirection(direction.getText());
         MapGUI.allPins.addPin(newPin);
-        //MapGUI.pinPoints.put
+        MapGUI.pinPoints.put(point, newPin);
+        MapGUI.background.updateMapImage(MapGUI.pinPoints);
 
 
     }
 
-    public void createWaterFountain() {
+    public void createWaterFountain(Point point) {
         WaterFountain wt = new WaterFountain(location.getText());
         wt.setStatus(status.getText());
         wt.setDirection(direction.getText());
         MapGUI.allPins.addPin(wt);
-
+        MapGUI.pinPoints.put(point, wt);
+        MapGUI.background.updateMapImage(MapGUI.pinPoints);
 
     }
 
