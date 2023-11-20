@@ -36,6 +36,7 @@ public class Map implements Writable {
         json.put("name", name);
         json.put("favouritePins", favToJson());
         json.put("allPins", allToJson());
+        json.put("pointList", pointsToJson());
         return json;
     }
 
@@ -66,7 +67,10 @@ public class Map implements Writable {
         JSONArray jsonArray = new JSONArray();
 
         for (Point p : pointList) {
-            jsonArray.put(p.toString());
+            JSONObject json = new JSONObject();
+            json.put("posX", p.getX());
+            json.put("posY", p.getY());
+            jsonArray.put(json);
         }
 
         return jsonArray;
@@ -93,10 +97,14 @@ public class Map implements Writable {
         }
     }
 
+    // MODIFIES: this
+    // EFFECTS: changes pinList to match the given list
     public void updatePointList(List<Point> pointList) {
-        pointList.clear();
+        this.pointList.clear();
 
-        this.pointList = pointList;
+        for (Point point: pointList) {
+            addPoint(point);
+        }
     }
 
     // MODIFIES: this
@@ -111,11 +119,17 @@ public class Map implements Writable {
         allPins.add(pin);
     }
 
+    // MODIFIES: this
+    // EFFECTS: adds point to pointList
+    public void addPoint(Point point) {
+        pointList.add(point);
+    }
+
     public String getName() {
         return name;
     }
 
-    // EFFECTS: returns an unmodifiable favourites in the map
+    // EFFECTS: returns an unmodifiable list of favourites in the map
     public List<Pin> getFavPins() {
         return Collections.unmodifiableList(favPins);
     }

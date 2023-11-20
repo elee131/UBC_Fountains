@@ -34,24 +34,23 @@ public class BackgroundPanel extends JComponent {
 
     private void drawAdditionalImages(Graphics g, List<Pin> pinList, List<Point> pointList) {
 
-        List<Point> clonedList = new ArrayList<>(pointList);
+        int listSize = pointList.size();
 
-        for (Pin pin : pinList) {
+        for (int i = 0; i < listSize; i++) {
+            Pin pin = pinList.get(i);
             String tag = pin.getTag();
-            int posX = (int) clonedList.get(0).getX();
-            int posY = (int) clonedList.get(0).getY();
+            Point point = pointList.get(i);
+
+            int posX = (int) point.getX();
+            int posY = (int) point.getY();
             int imageX = (int) (posX - waterIcon.getWidth(this) / 2.0);
             int imageY = (int) (posY - waterIcon.getHeight(this) / 2.0);
 
             if (tag.equals("Water Fountain")) {
                 g.drawImage(waterIcon, imageX, imageY, this);
             } else {
-
                 g.drawImage(pinIcon, imageX, imageY, this);
             }
-
-            clonedList.remove(0);
-
         }
 
     }

@@ -88,6 +88,8 @@ public class FavouritePins implements PinList {
     // MODIFIES: this
     // EFFECTS: adds the list of pins to allPins
     public void addPins(List<Pin> pinList) {
+        favPins.clear();
+
         for (Pin pin : pinList) {
             addPin(pin);
         }

@@ -13,10 +13,44 @@
             "direction": ""
         },
         {
+            "location": "NEST",
+            "tag": "food",
+            "status": "Working",
+            "direction": ""
+        },
+        {
             "location": "",
             "tag": "Water Fountain",
             "status": "",
             "direction": ""
+        },
+        {
+            "location": "",
+            "tag": "Water Fountain",
+            "status": "",
+            "direction": ""
+        }
+    ],
+    "pointList": [
+        {
+            "posX": 200,
+            "posY": 300
+        },
+        {
+            "posX": 300,
+            "posY": 400
+        },
+        {
+            "posX": 600,
+            "posY": 100
+        },
+        {
+            "posX": 637,
+            "posY": 377
+        },
+        {
+            "posX": 919,
+            "posY": 367
         }
     ],
     "name": "My Map",

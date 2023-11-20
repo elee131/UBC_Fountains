@@ -2,6 +2,7 @@ package persistence;
 
 import model.Map;
 
+import java.awt.*;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -48,6 +49,7 @@ public class JsonReader {
         Map map = new Map(name);
         addFavourites(map, jsonObject);
         addAll(map, jsonObject);
+        addPoints(map, jsonObject);
         return map;
     }
 
@@ -70,6 +72,27 @@ public class JsonReader {
             JSONObject nextPin = (JSONObject) json;
             addPinToAll(map, nextPin);
         }
+    }
+
+    // MODIFIES: map
+    // EFFECTS: parses pointList and adds it to map
+    private void addPoints(Map map, JSONObject jsonObject) {
+        JSONArray jsonArray = jsonObject.getJSONArray("pointList");
+        for (Object json: jsonArray) {
+            JSONObject nextPoint = (JSONObject) json;
+            addPointsToList(map, nextPoint);
+        }
+    }
+
+    // MODIFIES: map
+    // EFFECTS: parses through pointList from JSON object and adds it to map
+    private void addPointsToList(Map map, JSONObject jsonObject) {
+        Point point;
+        int posX = jsonObject.getInt("posX");
+        int posY = jsonObject.getInt("posY");
+
+        point = new Point(posX, posY);
+        map.addPoint(point);
     }
 
     // MODIFIES: map
