@@ -13,11 +13,22 @@ public class BackgroundPanel extends JComponent {
     private final  Image pinIcon;
     private final  Image waterIcon;
 
+    private List<Pin> pinList;
+    private List<Point> pointList;
+
     public BackgroundPanel(Image bgImage, Image pinIcon, Image waterIcon) {
 
         this.bgImage = bgImage;
         this.pinIcon = pinIcon;
         this.waterIcon = waterIcon;
+        pinList = new ArrayList<>();
+        pointList = new ArrayList<>();
+    }
+
+    public void updatePinsAndPoints(List<Pin> pinList, List<Point> pointList) {
+        this.pinList = pinList;
+        this.pointList = pointList;
+        repaint();
     }
 
     @Override
@@ -28,7 +39,7 @@ public class BackgroundPanel extends JComponent {
             g.drawImage(bgImage, 0, 0, this);
         }
 
-        drawAdditionalImages(g, MapGUI.allPins.getAllPins(), MapGUI.pointList);
+        drawAdditionalImages(g, pinList, pointList);
 
     }
 
@@ -55,18 +66,6 @@ public class BackgroundPanel extends JComponent {
 
     }
 
-    public void updateMapImage(List<Pin> pinList, List<Point> pointList) {
-
-        if (bgImage != null) {
-            Graphics2D g2d = (Graphics2D) this.getGraphics();
-            g2d.drawImage(bgImage, 0, 0, this);
-            drawAdditionalImages(g2d, pinList, pointList);
-            g2d.dispose();
-
-            repaint();
-        }
-
-    }
 
 
 

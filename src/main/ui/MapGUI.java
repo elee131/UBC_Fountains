@@ -40,10 +40,20 @@ public class MapGUI extends JFrame implements MouseListener {
 
     private JMenuBar menuPanel;
 
-    // each element of allPins and pointList must correspond to each other, thus they must be the same length
+    //REQUIRES: each element of allPins and pointList must correspond to each other, thus they must be the same length
     public MapGUI() {
         super("UBC fountains");
         setSize(INITIAL_SCREEN_WIDTH, INITIAL_SCREEN_HEIGHT);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setUndecorated(false);
+        setVisible(true);
+        setLayout(null);
+        setLayout(new BorderLayout());
+        this.addMouseListener(this);
+
+        menuPanel = new JMenuBar();
+        buildMenu(menuPanel);
+        this.setJMenuBar(menuPanel);
 
         loadImages();
         Image img = mapBackground.getImage();
@@ -51,26 +61,12 @@ public class MapGUI extends JFrame implements MouseListener {
                 img.getScaledInstance(INITIAL_SCREEN_WIDTH, INITIAL_SCREEN_HEIGHT, img.SCALE_SMOOTH),
                 pinIcon.getImage(),
                 waterFountainIcon.getImage());
-
         this.setContentPane(background);
 
-        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setUndecorated(false);
-        setVisible(true);
-        setLayout(null);
-
         initializeFields();
-        menuPanel = new JMenuBar();
-        buildMenu(menuPanel);
-        setLayout(new BorderLayout());
-        this.add(menuPanel, BorderLayout.NORTH);
-
         initializeSomePins();
 
-        this.addMouseListener(this);
-
         setVisible(true);
-
     }
 
     // MODIFIES: this
@@ -82,6 +78,7 @@ public class MapGUI extends JFrame implements MouseListener {
         pointList.add(new Point(200,300));
         pointList.add(new Point(300, 400));
         pointList.add(new Point(600, 100));
+        background.updatePinsAndPoints(allPins.getAllPins(), pointList);
     }
 
     // MODIFIES: this
@@ -223,7 +220,7 @@ public class MapGUI extends JFrame implements MouseListener {
             searchResultPoints.add(pointList.get(indexOfPoint));
         }
 
-        background.updateMapImage(searchResult, searchResultPoints);
+        background.updatePinsAndPoints(searchResult, searchResultPoints);
     }
 
     // MODIFIES: background
@@ -238,7 +235,7 @@ public class MapGUI extends JFrame implements MouseListener {
             searchResultPoints.add(pointList.get(indexOfPoint));
         }
 
-        background.updateMapImage(searchResult, searchResultPoints);
+        background.updatePinsAndPoints(searchResult, searchResultPoints);
     }
 
     // MODIFIES: myMap
@@ -271,7 +268,7 @@ public class MapGUI extends JFrame implements MouseListener {
             pointList.clear();
             pointList.addAll(myMap.getAllPoints());
 
-            background.updateMapImage(allPins.getAllPins(), pointList);
+            background.updatePinsAndPoints(allPins.getAllPins(), pointList);
             System.out.println(allPins.toString());
 
             JOptionPane.showMessageDialog(container, "Loaded " + myMap.getName() + " from " + JSON_STORE);

@@ -5,7 +5,7 @@ import javax.swing.*;
 import java.awt.*;
 
 
-
+// represents the popup screen that prompts the user to create a pin or cancel
 public class PinMakerPopup {
 
     int option;

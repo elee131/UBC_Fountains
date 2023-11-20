@@ -100,8 +100,8 @@ public class PinEditPopup extends JOptionPane {
 
     }
 
-
-
+    // MODIFIES: pin
+    // EFFECTS: edits the given pin based on user input
     public void editUserPin(Pin pin) {
 
         pin.setTag(tag.getText());
@@ -111,6 +111,8 @@ public class PinEditPopup extends JOptionPane {
 
     }
 
+    // MODIFIES: pin
+    // EFFECTS: edits the given pin based on user input except tag
     public void editWaterFountain(Pin pin) {
 
         pin.setLocation(location.getText());
@@ -119,6 +121,8 @@ public class PinEditPopup extends JOptionPane {
 
     }
 
+    // MODIFIES: MapGUI, pin
+    // EFFECTS: creates new userpin based on user input
     public void createUserPin(Point point) {
 
         UserPin newPin = new UserPin(tag.getText(), location.getText());
@@ -126,18 +130,20 @@ public class PinEditPopup extends JOptionPane {
         newPin.setDirection(direction.getText());
         MapGUI.allPins.addPin(newPin);
         MapGUI.pointList.add(point);
-        MapGUI.background.updateMapImage(allPins.getAllPins(), MapGUI.pointList);
+        MapGUI.background.updatePinsAndPoints(allPins.getAllPins(), MapGUI.pointList);
 
 
     }
 
+    // MODIFIES: MapGUI, pin
+    // EFFECTS: creates new waterFountain based on user input
     public void createWaterFountain(Point point) {
         WaterFountain wt = new WaterFountain(location.getText());
         wt.setStatus(status.getText());
         wt.setDirection(direction.getText());
         MapGUI.allPins.addPin(wt);
         MapGUI.pointList.add(point);
-        MapGUI.background.updateMapImage(allPins.getAllPins(), MapGUI.pointList);
+        MapGUI.background.updatePinsAndPoints(allPins.getAllPins(), MapGUI.pointList);
 
     }
 
