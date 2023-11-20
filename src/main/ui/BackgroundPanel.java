@@ -1,11 +1,10 @@
 package ui;
 
 import model.Pin;
-import model.pinsWithCoord.UserPinWithCoord;
-import model.pinsWithCoord.WaterFountainWithCoord;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 import java.util.List;
 
 // represents the panel in the background with the image of the map with images of the pins
@@ -29,51 +28,40 @@ public class BackgroundPanel extends JComponent {
             g.drawImage(bgImage, 0, 0, this);
         }
 
-        drawAdditionalImages(g, MapGUI.allPins.getAllPins());
+        drawAdditionalImages(g, MapGUI.allPins.getAllPins(), MapGUI.pointList);
 
     }
 
-    private void drawAdditionalImages(Graphics g, List<Pin> pinList) {
+    private void drawAdditionalImages(Graphics g, List<Pin> pinList, List<Point> pointList) {
 
-//        for (Point point : pointPinMap.keySet()) {
-//            String tag = pointPinMap.get(point).getTag();
-//            int imageX = (int) (point.getX() - waterIcon.getWidth(this) / 2.0);
-//            int imageY = (int) (point.getY() - waterIcon.getHeight(this) / 2.0);
-//
-//            if (tag.equals("Water Fountain")) {
-//                g.drawImage(waterIcon, imageX, imageY, this);
-//            } else {
-//
-//                g.drawImage(pinIcon, imageX, imageY, this);
-//            }
-//        }
+        List<Point> clonedList = new ArrayList<>(pointList);
 
         for (Pin pin : pinList) {
-            if (pin.getClass() == WaterFountainWithCoord.class) {
-                WaterFountainWithCoord wf = (WaterFountainWithCoord) pin;
-                int imageX = (int) (wf.getPosX() - waterIcon.getWidth(this) / 2.0);
-                int imageY = (int) (wf.getPosY() - waterIcon.getHeight(this) / 2.0);
+            String tag = pin.getTag();
+            int posX = (int) clonedList.get(0).getX();
+            int posY = (int) clonedList.get(0).getY();
+            int imageX = (int) (posX - waterIcon.getWidth(this) / 2.0);
+            int imageY = (int) (posY - waterIcon.getHeight(this) / 2.0);
 
+            if (tag.equals("Water Fountain")) {
                 g.drawImage(waterIcon, imageX, imageY, this);
-
-
-            } else if (pin.getClass() == UserPinWithCoord.class) {
-                UserPinWithCoord userPin = (UserPinWithCoord) pin;
-                int imageX = (int) (userPin.getPosX() - pinIcon.getWidth(this) / 2.0);
-                int imageY = (int) (userPin.getPosY() - pinIcon.getHeight(this) / 2.0);
+            } else {
 
                 g.drawImage(pinIcon, imageX, imageY, this);
             }
+
+            clonedList.remove(0);
+
         }
 
     }
 
-    public void updateMapImage(List<Pin> pinList) {
+    public void updateMapImage(List<Pin> pinList, List<Point> pointList) {
 
         if (bgImage != null) {
             Graphics2D g2d = (Graphics2D) this.getGraphics();
             g2d.drawImage(bgImage, 0, 0, this);
-            drawAdditionalImages(g2d, pinList);
+            drawAdditionalImages(g2d, pinList, pointList);
             g2d.dispose();
 
             repaint();

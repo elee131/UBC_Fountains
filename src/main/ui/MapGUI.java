@@ -1,13 +1,10 @@
 package ui;
 
 import model.*;
-import model.pinsWithCoord.UserPinWithCoord;
-import model.pinsWithCoord.WaterFountainWithCoord;
 import persistence.JsonReader;
 import persistence.JsonWriter;
 
 import javax.swing.*;
-import java.util.ArrayList;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +12,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
+import java.util.ArrayList;
 
 
 // represents the main screen of the application with a map that displays pins
@@ -34,12 +31,13 @@ public class MapGUI extends JFrame implements MouseListener {
 
     protected static AllPins allPins;
     protected static FavouritePins favPins;
+
+    protected static java.util.List<Point> pointList;
     protected static BackgroundPanel background;
     private JsonWriter jsonWriter;
     private JsonReader jsonReader;
 
     private Map myMap;
-   // protected static HashMap<Point, Pin> pinPoints;
 
     private JMenuBar menuPanel;
 
@@ -67,8 +65,7 @@ public class MapGUI extends JFrame implements MouseListener {
         setLayout(new BorderLayout());
         this.add(menuPanel, BorderLayout.NORTH);
 
-        allPins.addPin(new UserPinWithCoord("ICCS", "Water", 200,800));
-        allPins.addPin(new WaterFountainWithCoord("ICCS", 4, 500));
+        initializeSomePins();
 
         this.addMouseListener(this);
 
@@ -76,11 +73,19 @@ public class MapGUI extends JFrame implements MouseListener {
 
     }
 
+    private void initializeSomePins() {
+        allPins.addPin(new UserPin("ICCS", "Water"));
+        allPins.addPin(new WaterFountain("ICCS"));
+        pointList.add(new Point(200,300));
+        pointList.add(new Point(300, 400));
+    }
+
     // EFFECTS: initialize all fields for the constructor
     private void initializeFields() {
         myMap = new Map("My Map");
         favPins = new FavouritePins();
         allPins = new AllPins();
+        pointList = new ArrayList<>();
         jsonWriter = new JsonWriter(JSON_STORE);
         jsonReader = new JsonReader(JSON_STORE);
         container = new JFrame();
@@ -93,27 +98,38 @@ public class MapGUI extends JFrame implements MouseListener {
         JMenu main = new JMenu("Main Menu");
         menuPanel.add(main, BorderLayout.PAGE_START);
 
+        JMenuItem search = getSearch();
+        JMenuItem favourites = getFavourites();
+        JMenuItem save = getSave();
+        JMenuItem load = getLoad();
+
+        main.add(search);
+        main.add(favourites);
+        main.add(save);
+        main.add(load);
+    }
+
+    private JMenuItem getSearch() {
         JMenuItem search = new JMenuItem("Search");
         search.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 generateSearchPanel();
             }
         });
-//
-//        JMenuItem favourites = new JMenuItem("Favourites");
-////        favourites.addActionListener(new ActionListener() {
-////            public void actionPerformed(ActionEvent e) {
-////                displayFavs();
-////            }
-////        });
-////
-        JMenuItem save = new JMenuItem("Save");
-        save.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                saveState();
-            }
+        return search;
+    }
 
+    private JMenuItem getFavourites() {
+        JMenuItem favourites = new JMenuItem("Favourites");
+        favourites.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                displayFavs();
+            }
         });
+        return favourites;
+    }
+
+    private JMenuItem getLoad() {
         JMenuItem load = new JMenuItem("Load");
         load.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -121,12 +137,18 @@ public class MapGUI extends JFrame implements MouseListener {
             }
 
         });
+        return load;
+    }
 
-        main.add(search);
-//        main.add(favourites);
-        main.add(save);
-        main.add(load);
+    private JMenuItem getSave() {
+        JMenuItem save = new JMenuItem("Save");
+        save.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                saveState();
+            }
 
+        });
+        return save;
     }
 
     private void displayFavs() {
@@ -176,14 +198,14 @@ public class MapGUI extends JFrame implements MouseListener {
     private void searchLocation(String key) {
         java.util.List<Pin> searchResult = allPins.searchLocation(key);
 
-        background.updateMapImage(searchResult);
+        background.updateMapImage(searchResult, pointList);
     }
 
     private void searchTag(String key) {
         java.util.List<Pin> searchResult;
         searchResult = allPins.searchTag(key);
 
-        background.updateMapImage(searchResult);
+        background.updateMapImage(searchResult, pointList);
     }
 
     // MODIFIES: myMap
@@ -192,6 +214,7 @@ public class MapGUI extends JFrame implements MouseListener {
         try {
             myMap.updateFavToList(favPins.getFavPins());
             myMap.updateAllToList(allPins.getAllPins());
+            myMap.updatePointList(pointList);
 
             jsonWriter.open();
             jsonWriter.write(myMap);
@@ -209,8 +232,10 @@ public class MapGUI extends JFrame implements MouseListener {
             myMap = jsonReader.read();
             favPins.addPins(myMap.getFavPins());
             allPins.addPins(myMap.getAllPins());
+            pointList.clear();
+            this.pointList = myMap.getAllPoints();
 
-            background.updateMapImage(allPins.getAllPins());
+            background.updateMapImage(allPins.getAllPins(), pointList);
             System.out.println(allPins.toString());
             System.out.println("Loaded " + myMap.getName() + " from " + JSON_STORE);
         } catch (IOException e) {
@@ -218,34 +243,20 @@ public class MapGUI extends JFrame implements MouseListener {
         }
     }
 
-    // search through the hashmap
+
     // EFFECTS: checks if the user has clicked on a pin. return pin if the user has, null otherwise
     public Pin clickedPin(Point p) {
         Pin selected = null;
         double posX = p.getX();
         double posY = p.getY();
 
-        for (Pin pin: allPins.getAllPins()) {
+        for (Point point : pointList) {
+            boolean closeToX = (Math.abs(posX - point.getX()) <= PIN_WIDTH_HEIGHT);
+            boolean closeToY = (Math.abs(posY - point.getY()) <= PIN_WIDTH_HEIGHT);
 
-            if (UserPinWithCoord.class == pin.getClass()) {
-                UserPinWithCoord userPin = (UserPinWithCoord) pin;
-
-                double dx = Math.abs(posX - userPin.getPosX());
-                double dy = Math.abs(posY - userPin.getPosY());
-
-                if ((dx <= PIN_WIDTH_HEIGHT) && (dy <= PIN_WIDTH_HEIGHT)) {
-                    selected = userPin;
-                }
-
-            } else if (WaterFountainWithCoord.class == pin.getClass()) {
-                WaterFountainWithCoord wf = (WaterFountainWithCoord) pin;
-
-                double dx = Math.abs(posX - wf.getPosX());
-                double dy = Math.abs(posY - wf.getPosY());
-
-                if ((dx <= PIN_WIDTH_HEIGHT) && (dy <= PIN_WIDTH_HEIGHT)) {
-                    selected = wf;
-                }
+            if (closeToX && closeToY) {
+                int indexOfPin = pointList.indexOf(point);
+                selected = allPins.getAllPins().get(indexOfPin);
             }
         }
 
@@ -285,8 +296,6 @@ public class MapGUI extends JFrame implements MouseListener {
 
         pinIcon = new ImageIcon(System.getProperty("user.dir") + sep
                 + "images" + sep + "UserPin.png");
-
-
     }
 
 
