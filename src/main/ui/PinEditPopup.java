@@ -3,6 +3,10 @@ package ui;
 import model.Pin;
 import model.UserPin;
 import model.WaterFountain;
+import model.pinsWithCoord.UserPinWithCoord;
+import model.pinsWithCoord.WaterFountainWithCoord;
+
+import static ui.MapGUI.allPins;
 import static ui.MapGUI.container;
 
 
@@ -119,23 +123,21 @@ public class PinEditPopup extends JOptionPane {
 
     public void createUserPin(Point point) {
 
-        UserPin newPin = new UserPin(tag.getText(), location.getText());
+        UserPin newPin = new UserPinWithCoord(tag.getText(), location.getText(), (int)point.getX(), (int) point.getY());
         newPin.setStatus(status.getText());
         newPin.setDirection(direction.getText());
         MapGUI.allPins.addPin(newPin);
-        MapGUI.pinPoints.put(point, newPin);
-        MapGUI.background.updateMapImage(MapGUI.pinPoints);
+        MapGUI.background.updateMapImage(allPins.getAllPins());
 
 
     }
 
     public void createWaterFountain(Point point) {
-        WaterFountain wt = new WaterFountain(location.getText());
+        WaterFountain wt = new WaterFountainWithCoord(location.getText(), (int)point.getX(), (int) point.getY());
         wt.setStatus(status.getText());
         wt.setDirection(direction.getText());
         MapGUI.allPins.addPin(wt);
-        MapGUI.pinPoints.put(point, wt);
-        MapGUI.background.updateMapImage(MapGUI.pinPoints);
+        MapGUI.background.updateMapImage(allPins.getAllPins());
 
     }
 

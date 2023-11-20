@@ -4,6 +4,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 import persistence.Writable;
 
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -17,11 +18,15 @@ public class Map implements Writable {
 
     List<Pin> favPins;
 
+    List<Point> pointList;
+
     // EFFECTS: constructs a map of UBC campus with a list of favourite pins and list of all pins
     public Map(String name) {
         this.name = name;
         allPins = new ArrayList<>();
         favPins = new ArrayList<>();
+        pointList = new ArrayList<>();
+
     }
 
     // EFFECTS: writes the map into a json file with a name, allPins, and favPins
@@ -55,6 +60,7 @@ public class Map implements Writable {
 
         return jsonArray;
     }
+
 
     // MODIFIES: this
     // EFFECTS: changes favPins to match the given list
