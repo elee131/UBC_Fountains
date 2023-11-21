@@ -8,18 +8,16 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
 
 // represents the main screen of the application with a map that displays pins
-public class MapGUI extends JFrame implements MouseListener {
+public class MapGUI extends JFrame {
 
     private static final int INITIAL_SCREEN_WIDTH = 1500;
-    public static final int INITIAL_SCREEN_HEIGHT = 1000;
+    private static final int INITIAL_SCREEN_HEIGHT = 1000;
     public static final double PIN_WIDTH_HEIGHT = 50;
     private static final String JSON_STORE = "./data/myMap.json";
     private static ImageIcon mapBackground;
@@ -49,11 +47,12 @@ public class MapGUI extends JFrame implements MouseListener {
         setVisible(true);
         setLayout(null);
         setLayout(new BorderLayout());
-        this.addMouseListener(this);
+        // this.addMouseListener(this);
 
         menuPanel = new JMenuBar();
         buildMenu(menuPanel);
         this.setJMenuBar(menuPanel);
+
 
         loadImages();
         Image img = mapBackground.getImage();
@@ -67,6 +66,7 @@ public class MapGUI extends JFrame implements MouseListener {
         initializeSomePins();
 
         setVisible(true);
+        System.out.println("~~~~~~~~~~~~~~~ " + menuPanel.getHeight());
     }
 
     // MODIFIES: this
@@ -103,13 +103,26 @@ public class MapGUI extends JFrame implements MouseListener {
 
         JMenuItem search = getSearch();
         JMenuItem favourites = getFavourites();
+        JMenuItem showAll = showAll();
         JMenuItem save = getSave();
         JMenuItem load = getLoad();
 
         main.add(search);
+        main.add(showAll);
         main.add(favourites);
         main.add(save);
         main.add(load);
+    }
+
+    private JMenuItem showAll() {
+        JMenuItem showAll = new JMenuItem("Show all");
+        showAll.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                background.updatePinsAndPoints(allPins.getAllPins(), pointList);
+            }
+        });
+        return showAll;
+
     }
 
     // EFFECTS: builds the search menuItem for the menuBar
@@ -161,7 +174,15 @@ public class MapGUI extends JFrame implements MouseListener {
     // MODIFIES: background
     // EFFECTS: displays only the pins marked as favourites
     private void displayFavs() {
-        // TODO -- need to refactor backgroundpanel first
+        java.util.List<Pin> all = allPins.getAllPins();
+        java.util.List<Point> favPoints = new ArrayList<>();
+
+        for (Pin pin : favPins.getFavPins()) {
+            int pinIndex = all.indexOf(pin);
+            favPoints.add(pointList.get(pinIndex));
+        }
+
+        background.updatePinsAndPoints(favPins.getFavPins(), favPoints);
 
     }
 
@@ -299,29 +320,6 @@ public class MapGUI extends JFrame implements MouseListener {
         return selected; // stub
     }
 
-    // MODIFIES: this
-    // EFFECTS: check if the user has clicked on a pin.
-    //         if the user clicked on a pin, display a pop up with its saved information and allow them to edit it
-    //         if the user has not clicked on a pin, display a pop up prompting the user to create a pin
-    @Override
-    public void mouseClicked(MouseEvent e) {
-        Point point = e.getPoint();
-        Pin selected = clickedPin(point);
-
-        if (selected != null) {
-
-            if (selected.getTag().equals("Water Fountain")) {
-                JOptionPane editor = new PinEditPopup((WaterFountain) selected);
-                this.add(editor);
-            } else {
-                JOptionPane editor = new PinEditPopup((UserPin) selected);
-                this.add(editor);
-            }
-        } else {
-            PinMakerPopup pinMaker = new PinMakerPopup(point, this);
-            this.add(pinMaker.getPinMakerScreen());
-        }
-    }
 
     // EFFECTS: loads images from the images folder
     private void loadImages() {
@@ -337,24 +335,4 @@ public class MapGUI extends JFrame implements MouseListener {
                 + "images" + sep + "UserPin.png");
     }
 
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-
-    }
 }

@@ -2,57 +2,55 @@
     "allPins": [
         {
             "location": "ICCS",
-            "tag": "Water",
+            "tag": "Water Fountain",
+            "status": "Working",
+            "direction": "X wing, second floor by the men's bathroom"
+        },
+        {
+            "location": "MCLD",
+            "tag": "Water Fountain",
             "status": "Working",
             "direction": ""
         },
         {
-            "location": "ICCS",
+            "location": "LIFE",
+            "tag": "Water Fountain",
+            "status": "Working",
+            "direction": "Second floor, by the men's bathroom. has water bottle filler."
+        },
+        {
+            "location": "NEST",
+            "tag": "Microwave",
+            "status": "Broken",
+            "direction": ""
+        },
+        {
+            "location": "CHEM",
+            "tag": "Water Fountain",
+            "status": "Broken",
+            "direction": ""
+        },
+        {
+            "location": "LIFE",
+            "tag": "Water Fountain",
+            "status": "Working",
+            "direction": "hello"
+        }
+    ],
+    "pointList": [],
+    "name": "My Map",
+    "favouritePins": [
+        {
+            "location": "MCLD",
             "tag": "Water Fountain",
             "status": "Working",
             "direction": ""
         },
         {
             "location": "NEST",
-            "tag": "food",
-            "status": "Working",
-            "direction": ""
-        },
-        {
-            "location": "",
-            "tag": "Water Fountain",
-            "status": "",
-            "direction": ""
-        },
-        {
-            "location": "",
-            "tag": "Water Fountain",
-            "status": "",
+            "tag": "Microwave",
+            "status": "Broken",
             "direction": ""
         }
-    ],
-    "pointList": [
-        {
-            "posX": 200,
-            "posY": 300
-        },
-        {
-            "posX": 300,
-            "posY": 400
-        },
-        {
-            "posX": 600,
-            "posY": 100
-        },
-        {
-            "posX": 539,
-            "posY": 375
-        },
-        {
-            "posX": 985,
-            "posY": 325
-        }
-    ],
-    "name": "My Map",
-    "favouritePins": []
+    ]
 }

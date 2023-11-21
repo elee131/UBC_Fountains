@@ -18,11 +18,11 @@ public class PinMakerPopup {
             "Cancel"
     };
 
-    public PinMakerPopup(Point point, MapGUI mapGUI) {
+    public PinMakerPopup(Point point) {
         JFrame container = new JFrame();
         pinMakerScreen = new JOptionPane();
         container.setSize(300,300);
-        option = pinMakerScreen.showOptionDialog(mapGUI,
+        option = pinMakerScreen.showOptionDialog(container,
                 "What Type of Pin Would You Like?",
                 "Create A Pin!",
                 pinMakerScreen.YES_NO_CANCEL_OPTION,
