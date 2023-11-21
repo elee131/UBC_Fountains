@@ -36,6 +36,7 @@ public class PinEditPopup extends JOptionPane {
         location = new JTextField();
         status = new JTextField();
         direction = new JTextField();
+        favouriteButton = new JRadioButton("Add to favourite?");
 
         Object[] textFields = {
                 "Tag: ", tag,
@@ -57,12 +58,7 @@ public class PinEditPopup extends JOptionPane {
     }
 
     public PinEditPopup(UserPin pin) {
-        tag = new JTextField(pin.getTag());
-        location = new JTextField(pin.getLocation());
-        status = new JTextField(pin.getStatus());
-        direction = new JTextField(pin.getDirections());
-        deleteButton = new JRadioButton("Delete pin?");
-        favouriteButton = new JRadioButton("Add to favourite?");
+        initializeComponents(pin);
 
         Object[] textFields = {
                 "Tag: ", tag,
@@ -73,8 +69,6 @@ public class PinEditPopup extends JOptionPane {
                 favouriteButton
 
         };
-
-
 
         option = JOptionPane.showConfirmDialog(container, textFields, "Edit Pin", JOptionPane.OK_CANCEL_OPTION);
 
@@ -87,12 +81,27 @@ public class PinEditPopup extends JOptionPane {
         container.dispose();
     }
 
+    private void initializeComponents(UserPin pin) {
+        tag = new JTextField(pin.getTag());
+        location = new JTextField(pin.getLocation());
+        status = new JTextField(pin.getStatus());
+        direction = new JTextField(pin.getDirections());
+        deleteButton = new JRadioButton("Delete pin?");
+        favouriteButton = new JRadioButton("Add to favourite?");
+        ButtonGroup group = new ButtonGroup();
+        group.add(deleteButton);
+        group.add(favouriteButton);
+    }
+
     public PinEditPopup(WaterFountain pin) {
         location = new JTextField(pin.getLocation());
         status = new JTextField(pin.getStatus());
         direction = new JTextField(pin.getDirections());
         deleteButton = new JRadioButton("Delete pin?");
         favouriteButton = new JRadioButton("Add to favourite?");
+        ButtonGroup group = new ButtonGroup();
+        group.add(deleteButton);
+        group.add(favouriteButton);
 
         Object[] textFields = {
                 "Location: ", location,
@@ -118,7 +127,10 @@ public class PinEditPopup extends JOptionPane {
         if (deleteButton.isSelected()) {
             int index = allPins.getAllPins().indexOf(pin);
             allPins.removePin(pin);
+            favPins.removePin(pin);
             pointList.remove(index);
+            background.updatePinsAndPoints(allPins.getAllPins(), pointList);
+
         } else if (favouriteButton.isSelected()) {
             MapGUI.favPins.addPin(pin);
         }
@@ -136,7 +148,9 @@ public class PinEditPopup extends JOptionPane {
         if (deleteButton.isSelected()) {
             int index = allPins.getAllPins().indexOf(pin);
             allPins.removePin(pin);
+            favPins.removePin(pin);
             pointList.remove(index);
+            background.updatePinsAndPoints(allPins.getAllPins(), pointList);
         } else if (favouriteButton.isSelected()) {
             MapGUI.favPins.addPin(pin);
         }
@@ -148,7 +162,7 @@ public class PinEditPopup extends JOptionPane {
     }
 
     // MODIFIES: MapGUI, pin
-    // EFFECTS: creates new userpin based on user input
+    // EFFECTS: creates new userPin based on user input
     public void createUserPin(Point point) {
         UserPin newPin = new UserPin(tag.getText(), location.getText());
         newPin.setStatus(status.getText());

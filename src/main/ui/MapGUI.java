@@ -18,7 +18,7 @@ public class MapGUI extends JFrame {
 
     private static final int INITIAL_SCREEN_WIDTH = 1500;
     private static final int INITIAL_SCREEN_HEIGHT = 1000;
-    public static final double PIN_WIDTH_HEIGHT = 50;
+    public static final double PIN_WIDTH_HEIGHT = 30;
     private static final String JSON_STORE = "./data/myMap.json";
     private static ImageIcon mapBackground;
     protected static JFrame container;
@@ -66,7 +66,6 @@ public class MapGUI extends JFrame {
         initializeSomePins();
 
         setVisible(true);
-        System.out.println("~~~~~~~~~~~~~~~ " + menuPanel.getHeight());
     }
 
     // MODIFIES: this
@@ -122,7 +121,6 @@ public class MapGUI extends JFrame {
             }
         });
         return showAll;
-
     }
 
     // EFFECTS: builds the search menuItem for the menuBar
@@ -290,7 +288,6 @@ public class MapGUI extends JFrame {
             pointList.addAll(myMap.getAllPoints());
 
             background.updatePinsAndPoints(allPins.getAllPins(), pointList);
-            System.out.println(allPins.toString());
 
             JOptionPane.showMessageDialog(container, "Loaded " + myMap.getName() + " from " + JSON_STORE);
 

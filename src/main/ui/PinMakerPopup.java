@@ -39,8 +39,6 @@ public class PinMakerPopup {
             //
         }
 
-
-
     }
 
     public JOptionPane getPinMakerScreen() {

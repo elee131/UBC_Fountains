@@ -65,7 +65,6 @@ public class BackgroundPanel extends JComponent implements MouseListener {
             int imageX = (int) (posX - waterIcon.getWidth(this) / 2.0);
             int imageY = (int) (posY - waterIcon.getHeight(this) / 2.0);
 
-            // System.out.println("------------ " + point.getX() + " " + point.getY());
 
             if (tag.equals("Water Fountain")) {
                 g.drawImage(waterIcon, imageX, imageY, this);
@@ -85,7 +84,6 @@ public class BackgroundPanel extends JComponent implements MouseListener {
     public void mouseClicked(MouseEvent e) {
         Point point = e.getPoint();
         Pin selected = clickedPin(point);
-        System.out.println(point.getX() + " " + point.getY());
 
         if (selected != null) {
 
@@ -97,7 +95,7 @@ public class BackgroundPanel extends JComponent implements MouseListener {
                 this.add(editor);
             }
         } else {
-            System.out.println("====   " + point.getX() + " " + point.getY());
+
             PinMakerPopup pinMaker = new PinMakerPopup(point);
             this.add(pinMaker.getPinMakerScreen());
         }

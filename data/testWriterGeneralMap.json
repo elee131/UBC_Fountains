@@ -13,6 +13,16 @@
             "direction": ""
         }
     ],
+    "pointList": [
+        {
+            "posX": 200,
+            "posY": 300
+        },
+        {
+            "posX": 400,
+            "posY": 500
+        }
+    ],
     "name": "My New Map",
     "favouritePins": [{
         "location": "CIRS",
