@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import java.awt.*;
 
-
+// code inspired from https://www.youtube.com/watch?v=_hB94F8JioM
 // represents the popup screen that prompts the user to create a pin or cancel
 public class PinMakerPopup {
 

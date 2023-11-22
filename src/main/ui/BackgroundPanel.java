@@ -31,12 +31,16 @@ public class BackgroundPanel extends JComponent implements MouseListener {
         this.addMouseListener(this);
     }
 
+    // MODIFIES: this
+    // EFFECTS: updates the pinList and pointList, and updates the ui accordingly
     public void updatePinsAndPoints(List<Pin> pinList, List<Point> pointList) {
         this.pinList = pinList;
         this.pointList = pointList;
         repaint();
     }
 
+    // MODIFIES: this
+    // EFFECTS: draws the background map
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -49,10 +53,9 @@ public class BackgroundPanel extends JComponent implements MouseListener {
 
     }
 
+    // MODIFIES: this
+    // EFFECTS: draws pins within pinList based on the coordinates in pointList
     private void drawAdditionalImages(Graphics g, List<Pin> pinList, List<Point> pointList) {
-
-
-
         int listSize = pointList.size();
 
         for (int i = 0; i < listSize; i++) {
@@ -62,9 +65,9 @@ public class BackgroundPanel extends JComponent implements MouseListener {
 
             int posX = (int) point.getX();
             int posY = (int) point.getY();
+
             int imageX = (int) (posX - waterIcon.getWidth(this) / 2.0);
             int imageY = (int) (posY - waterIcon.getHeight(this) / 2.0);
-
 
             if (tag.equals("Water Fountain")) {
                 g.drawImage(waterIcon, imageX, imageY, this);
@@ -78,8 +81,8 @@ public class BackgroundPanel extends JComponent implements MouseListener {
 
     // MODIFIES: this
     // EFFECTS: check if the user has clicked on a pin.
-    //         if the user clicked on a pin, display a pop up with its saved information and allow them to edit it
-    //         if the user has not clicked on a pin, display a pop up prompting the user to create a pin
+    //         if the user clicked on a pin, display a popup with its saved information and allow them to edit it
+    //         if the user has not clicked on a pin, display a popup prompting the user to create a pin
     @Override
     public void mouseClicked(MouseEvent e) {
         Point point = e.getPoint();

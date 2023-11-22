@@ -33,3 +33,21 @@ location, and directions
 in the program
 - I want to be able to save my pins and favourites to file 
 - I want to be able to load my pins and favourites from file
+
+## Instructions for grader
+- You can generate the first required action by clicking anywhere on the screen. Click "Mark a Water Fountain"
+or "Mark a Pin" then click "Ok" on the next screen to generate a pin. If you click on the added pin again, you can see
+the information you entered previously.
+- You can generate the second required action by clicking on a pin, checking off the "delete pin" radiobox
+in the popup screen, then clicking "ok".
+- My visual components are displayed in the screen at all times. Water fountains added by the user has a
+water bottle icon, and others are shown as a red pin. The pins are centered around the point the user clicked 
+on. 
+- You can save the state of my application by clicking on "main menu" then selecting "save"
+- You can load the state of my application by clicking on "main menu" then selecting "load"
+
+## Citations 
+
+userPin icons: https://icons8.com/icon/13800/location
+waterFountain icons: https://icons8.com/icon/W1eLHFFCMpBA/bottle-of-water
+ubc campus map taken from: https://planning.ubc.ca/about-us/campus-maps

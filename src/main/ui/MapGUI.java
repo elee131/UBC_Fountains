@@ -12,13 +12,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+// code inspired by https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase.git
+// code inspired by https://github.students.cs.ubc.ca/CPSC210/C3-LectureLabStarter.git
 // represents the main screen of the application with a map that displays pins
 public class MapGUI extends JFrame {
 
     private static final int INITIAL_SCREEN_WIDTH = 1500;
     private static final int INITIAL_SCREEN_HEIGHT = 1000;
-    public static final double PIN_WIDTH_HEIGHT = 30;
     private static final String JSON_STORE = "./data/myMap.json";
     private static ImageIcon mapBackground;
     protected static JFrame container;
@@ -47,12 +47,10 @@ public class MapGUI extends JFrame {
         setVisible(true);
         setLayout(null);
         setLayout(new BorderLayout());
-        // this.addMouseListener(this);
 
         menuPanel = new JMenuBar();
         buildMenu(menuPanel);
         this.setJMenuBar(menuPanel);
-
 
         loadImages();
         Image img = mapBackground.getImage();
@@ -69,7 +67,7 @@ public class MapGUI extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: initializes some pins for the constructor for testing purposes
+    // EFFECTS: initializes some pins for the constructor
     private void initializeSomePins() {
         allPins.addPin(new UserPin("ICCS", "Water"));
         allPins.addPin(new WaterFountain("ICCS"));
@@ -113,6 +111,7 @@ public class MapGUI extends JFrame {
         main.add(load);
     }
 
+    // EFFECTS: builds the showAll menuItems for the menuBar
     private JMenuItem showAll() {
         JMenuItem showAll = new JMenuItem("Show all");
         showAll.addActionListener(new ActionListener() {
@@ -185,7 +184,7 @@ public class MapGUI extends JFrame {
     }
 
     // MODIFIES: this
-    // EFFECTS: builds the pop up window for the users to use for searching by keywords
+    // EFFECTS: builds the popup window for the users to use for searching by keywords
     private void generateSearchPanel() {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout());
@@ -296,27 +295,6 @@ public class MapGUI extends JFrame {
 
         }
     }
-
-
-    // EFFECTS: checks if the user has clicked on a pin. return pin if the user has, null otherwise
-    public Pin clickedPin(Point p) {
-        Pin selected = null;
-        double posX = p.getX();
-        double posY = p.getY();
-
-        for (Point point : pointList) {
-            boolean closeToX = (Math.abs(posX - point.getX()) <= PIN_WIDTH_HEIGHT);
-            boolean closeToY = (Math.abs(posY - point.getY()) <= PIN_WIDTH_HEIGHT);
-
-            if (closeToX && closeToY) {
-                int indexOfPin = pointList.indexOf(point);
-                selected = allPins.getAllPins().get(indexOfPin);
-            }
-        }
-
-        return selected; // stub
-    }
-
 
     // EFFECTS: loads images from the images folder
     private void loadImages() {

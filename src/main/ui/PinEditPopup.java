@@ -11,9 +11,9 @@ import java.awt.*;
 
 import static ui.MapGUI.*;
 
+// code inspired by https://www.youtube.com/watch?v=_hB94F8JioM
 // represents the popup when creating or editing a pin
 public class PinEditPopup extends JOptionPane {
-
 
     JTextField tag;
     JTextField location;
@@ -50,13 +50,14 @@ public class PinEditPopup extends JOptionPane {
 
         if (str.equals("waterFountain")) {
             createWaterFountain(point);
-        } else  {
+        } else {
             createUserPin(point);
         }
 
         container.dispose();
     }
 
+    // EFFECTS: constructs a popup with given pin's information
     public PinEditPopup(UserPin pin) {
         initializeComponents(pin);
 
@@ -74,13 +75,12 @@ public class PinEditPopup extends JOptionPane {
 
         if (option == JOptionPane.OK_OPTION) {
             editUserPin(pin);
-        } else {
-            container.dispose();
         }
-        
         container.dispose();
     }
 
+    // MODIFIES: this
+    // EFFECTS: initializes JCompoments for pinEditPopup
     private void initializeComponents(UserPin pin) {
         tag = new JTextField(pin.getTag());
         location = new JTextField(pin.getLocation());
@@ -93,6 +93,7 @@ public class PinEditPopup extends JOptionPane {
         group.add(favouriteButton);
     }
 
+    // EFFECTS: constructs a popup with given pin's information
     public PinEditPopup(WaterFountain pin) {
         location = new JTextField(pin.getLocation());
         status = new JTextField(pin.getStatus());
@@ -111,14 +112,13 @@ public class PinEditPopup extends JOptionPane {
                 favouriteButton
         };
 
-        container = new JFrame();
-        container.setSize(300, 300);
         option = JOptionPane.showConfirmDialog(container, textFields, "Edit Fountain", JOptionPane.OK_CANCEL_OPTION);
 
-        editWaterFountain(pin);
+        if (option == JOptionPane.OK_OPTION) {
+            editWaterFountain(pin);
+        }
 
         container.dispose();
-
     }
 
     // MODIFIES: pin
