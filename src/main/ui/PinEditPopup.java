@@ -15,12 +15,14 @@ import static ui.MapGUI.*;
 // represents the popup when creating or editing a pin
 public class PinEditPopup extends JOptionPane {
 
-    JTextField tag;
-    JTextField location;
-    JTextField status;
-    JTextField direction;
-    JRadioButton deleteButton;
-    JRadioButton favouriteButton;
+    private final String[] userPinComboOptions = {"Working", "Broken", "Available", "Unavailable"};
+    private JComboBox status;
+    private JTextField tag;
+    private JTextField location;
+    // private JTextField status;
+    private JTextField direction;
+    private JRadioButton deleteButton;
+    private JRadioButton favouriteButton;
 
     int option;
 
@@ -34,7 +36,7 @@ public class PinEditPopup extends JOptionPane {
             tag = new JTextField();
         }
         location = new JTextField();
-        status = new JTextField();
+        status = new JComboBox(userPinComboOptions);
         direction = new JTextField();
         favouriteButton = new JRadioButton("Add to favourite?");
 
@@ -84,7 +86,8 @@ public class PinEditPopup extends JOptionPane {
     private void initializeComponents(UserPin pin) {
         tag = new JTextField(pin.getTag());
         location = new JTextField(pin.getLocation());
-        status = new JTextField(pin.getStatus());
+        status = new JComboBox(userPinComboOptions);
+        status.setSelectedItem(pin.getStatus());
         direction = new JTextField(pin.getDirections());
         deleteButton = new JRadioButton("Delete pin?");
         favouriteButton = new JRadioButton("Add to favourite?");
@@ -96,7 +99,8 @@ public class PinEditPopup extends JOptionPane {
     // EFFECTS: constructs a popup with given pin's information
     public PinEditPopup(WaterFountain pin) {
         location = new JTextField(pin.getLocation());
-        status = new JTextField(pin.getStatus());
+        status = new JComboBox(userPinComboOptions);
+        status.setSelectedItem(pin.getStatus());
         direction = new JTextField(pin.getDirections());
         deleteButton = new JRadioButton("Delete pin?");
         favouriteButton = new JRadioButton("Add to favourite?");
@@ -137,7 +141,7 @@ public class PinEditPopup extends JOptionPane {
 
         pin.setTag(tag.getText());
         pin.setLocation(location.getText());
-        pin.setStatus(status.getText());
+        pin.setStatus((String)status.getSelectedItem());
         pin.setDirection(direction.getText());
 
     }
@@ -156,7 +160,7 @@ public class PinEditPopup extends JOptionPane {
         }
 
         pin.setLocation(location.getText());
-        pin.setStatus(status.getText());
+        pin.setStatus((String)status.getSelectedItem());
         pin.setDirection(direction.getText());
 
     }
@@ -165,7 +169,7 @@ public class PinEditPopup extends JOptionPane {
     // EFFECTS: creates new userPin based on user input
     public void createUserPin(Point point) {
         UserPin newPin = new UserPin(tag.getText(), location.getText());
-        newPin.setStatus(status.getText());
+        newPin.setStatus((String)status.getSelectedItem());
         newPin.setDirection(direction.getText());
 
         MapGUI.allPins.addPin(newPin);
@@ -184,7 +188,7 @@ public class PinEditPopup extends JOptionPane {
     // EFFECTS: creates new waterFountain based on user input
     public void createWaterFountain(Point point) {
         WaterFountain wt = new WaterFountain(location.getText());
-        wt.setStatus(status.getText());
+        wt.setStatus((String)status.getSelectedItem());
         wt.setDirection(direction.getText());
         MapGUI.allPins.addPin(wt);
         MapGUI.pointList.add(point);
