@@ -81,11 +81,15 @@ public class UserPinTest {
 
 
         assertTrue(userPin.equals(test1));
+        assertTrue(userPin.hashCode() == test1.hashCode());
 
         test1.setStatus("Broken");
         assertFalse(userPin.equals(test1));
+        assertFalse(userPin.hashCode() == test1.hashCode());
         assertFalse(userPin.equals(test2));
+        assertFalse(userPin.hashCode() == test2.hashCode());
         assertFalse(userPin.equals(test3));
+        assertFalse(userPin.hashCode() == test3.hashCode());
 
     }
 

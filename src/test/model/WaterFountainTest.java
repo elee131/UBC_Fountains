@@ -63,11 +63,15 @@ public class WaterFountainTest {
         test2.setDirection("hello everybody my name is markiplier");
 
         assertTrue(waterFountain.equals(fountain2));
+        assertTrue(waterFountain.hashCode() == fountain2.hashCode());
 
         fountain2.setStatus("Broken");
         assertFalse(waterFountain.equals(fountain2));
+        assertFalse(waterFountain.hashCode() == fountain2.hashCode());
         assertFalse(waterFountain.equals(test));
+        assertFalse(waterFountain.hashCode() == test.hashCode());
         assertFalse(waterFountain.equals(test2));
+        assertFalse(waterFountain.hashCode() == test2.hashCode());
 
 
 
