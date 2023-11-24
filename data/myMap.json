@@ -2,55 +2,42 @@
     "allPins": [
         {
             "location": "ICCS",
-            "tag": "Water Fountain",
-            "status": "Working",
-            "direction": "X wing, second floor by the men's bathroom"
-        },
-        {
-            "location": "MCLD",
-            "tag": "Water Fountain",
+            "tag": "Water",
             "status": "Working",
             "direction": ""
         },
         {
-            "location": "LIFE",
+            "location": "ICCS",
             "tag": "Water Fountain",
             "status": "Working",
-            "direction": "Second floor, by the men's bathroom. has water bottle filler."
+            "direction": ""
         },
         {
             "location": "NEST",
-            "tag": "Microwave",
-            "status": "Broken",
+            "tag": "food",
+            "status": "Available",
             "direction": ""
-        },
-        {
-            "location": "CHEM",
-            "tag": "Water Fountain",
-            "status": "Broken",
-            "direction": ""
-        },
-        {
-            "location": "LIFE",
-            "tag": "Water Fountain",
-            "status": "Working",
-            "direction": "hello"
         }
     ],
-    "pointList": [],
-    "name": "My Map",
-    "favouritePins": [
+    "pointList": [
         {
-            "location": "MCLD",
-            "tag": "Water Fountain",
-            "status": "Working",
-            "direction": ""
+            "posX": 200,
+            "posY": 300
         },
         {
-            "location": "NEST",
-            "tag": "Microwave",
-            "status": "Broken",
-            "direction": ""
+            "posX": 300,
+            "posY": 400
+        },
+        {
+            "posX": 600,
+            "posY": 100
         }
-    ]
+    ],
+    "name": "My Map",
+    "favouritePins": [{
+        "location": "NEST",
+        "tag": "food",
+        "status": "Available",
+        "direction": ""
+    }]
 }

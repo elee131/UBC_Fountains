@@ -2,6 +2,7 @@ package model;
 
 import org.json.JSONObject;
 
+import java.util.Objects;
 import java.util.UUID;
 
 // a user-created pin with a tag (a type of feature), status (working, available, broken, unavailable)
@@ -66,6 +67,24 @@ public class UserPin implements Pin {
         json.put("status", status);
         json.put("direction", directions);
         return json;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        UserPin userPin = (UserPin) o;
+        return Objects.equals(tag, userPin.tag) && Objects.equals(status, userPin.status)
+                && Objects.equals(location, userPin.location) && Objects.equals(directions, userPin.directions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tag, status, location, directions);
     }
 
     // EFFECTS: return true if status of userPin is "Broken", false otherwise

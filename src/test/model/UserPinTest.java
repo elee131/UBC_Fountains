@@ -72,5 +72,22 @@ public class UserPinTest {
         assertEquals("LIFE: Food: Working: ", userPin.toString());
     }
 
+    @Test
+    void testEquals() {
+        UserPin test1 = new UserPin("LIFE", "Food");
+        UserPin test2 = new UserPin("HEBB", "Food");
+        UserPin test3 = new UserPin("LIFE", "Food");
+        test3.setDirection("hello everybody my name is markiplier");
+
+
+        assertTrue(userPin.equals(test1));
+
+        test1.setStatus("Broken");
+        assertFalse(userPin.equals(test1));
+        assertFalse(userPin.equals(test2));
+        assertFalse(userPin.equals(test3));
+
+    }
+
 
 }

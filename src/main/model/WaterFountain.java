@@ -2,6 +2,7 @@ package model;
 
 import org.json.JSONObject;
 
+import java.util.Objects;
 import java.util.UUID;
 
 // a water fountain with a status (working/broken), location (UBC buliding code), and direction
@@ -63,6 +64,24 @@ public class WaterFountain implements Pin {
         json.put("status", status);
         json.put("direction", directions);
         return json;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        WaterFountain that = (WaterFountain) o;
+        return Objects.equals(tag, that.tag) && Objects.equals(status, that.status)
+                && Objects.equals(location, that.location) && Objects.equals(directions, that.directions);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(tag, status, location, directions);
     }
 
     // EFFECTS: writes the attributes of waterFountain as a string separated by colons

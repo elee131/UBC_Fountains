@@ -55,5 +55,22 @@ public class WaterFountainTest {
         assertEquals("LIFE: Water Fountain: Working: ", waterFountain.toString());
     }
 
+    @Test
+    void testEquals() {
+        WaterFountain fountain2 = new WaterFountain("LIFE");
+        WaterFountain test = new WaterFountain("HEBB");
+        WaterFountain test2 = new WaterFountain("LIFE");
+        test2.setDirection("hello everybody my name is markiplier");
+
+        assertTrue(waterFountain.equals(fountain2));
+
+        fountain2.setStatus("Broken");
+        assertFalse(waterFountain.equals(fountain2));
+        assertFalse(waterFountain.equals(test));
+        assertFalse(waterFountain.equals(test2));
+
+
+
+    }
 
 }
