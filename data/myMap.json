@@ -15,8 +15,20 @@
         {
             "location": "NEST",
             "tag": "food",
-            "status": "Available",
+            "status": "Working",
             "direction": ""
+        },
+        {
+            "location": "safj",
+            "tag": "Here",
+            "status": "Working",
+            "direction": "kajf"
+        },
+        {
+            "location": "dfas",
+            "tag": "Water Fountain",
+            "status": "Working",
+            "direction": "af"
         }
     ],
     "pointList": [
@@ -31,13 +43,21 @@
         {
             "posX": 600,
             "posY": 100
+        },
+        {
+            "posX": 628,
+            "posY": 347
+        },
+        {
+            "posX": 727,
+            "posY": 252
         }
     ],
     "name": "My Map",
     "favouritePins": [{
-        "location": "NEST",
-        "tag": "food",
-        "status": "Available",
-        "direction": ""
+        "location": "safj",
+        "tag": "Here",
+        "status": "Working",
+        "direction": "kajf"
     }]
 }

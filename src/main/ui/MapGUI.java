@@ -1,13 +1,17 @@
 package ui;
 
 import model.*;
+import model.Event;
 import persistence.JsonReader;
 import persistence.JsonWriter;
+
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -15,7 +19,7 @@ import java.util.ArrayList;
 // code inspired by https://github.students.cs.ubc.ca/CPSC210/B02-SpaceInvadersBase.git
 // code inspired by https://github.students.cs.ubc.ca/CPSC210/C3-LectureLabStarter.git
 // represents the main screen of the application with a map that displays pins
-public class MapGUI extends JFrame {
+public class MapGUI extends JFrame implements WindowListener {
 
     private static final int INITIAL_SCREEN_WIDTH = 1500;
     private static final int INITIAL_SCREEN_HEIGHT = 1000;
@@ -62,6 +66,7 @@ public class MapGUI extends JFrame {
 
         initializeFields();
         initializeSomePins();
+        addWindowListener(this);
 
         setVisible(true);
     }
@@ -310,4 +315,46 @@ public class MapGUI extends JFrame {
                 + "images" + sep + "UserPin.png");
     }
 
+    @Override
+    public void windowOpened(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowClosing(WindowEvent e) {
+        EventLog log = EventLog.getInstance();
+
+        for (Event next : log) {
+            System.out.println(next.toString() + "\n\n");
+        }
+    }
+
+    @Override
+    public void windowClosed(WindowEvent e) {
+        EventLog log = EventLog.getInstance();
+
+        for (Event next : log) {
+            System.out.println(next.toString() + "\n\n");
+        }
+    }
+
+    @Override
+    public void windowIconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeiconified(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowActivated(WindowEvent e) {
+
+    }
+
+    @Override
+    public void windowDeactivated(WindowEvent e) {
+
+    }
 }

@@ -23,7 +23,7 @@ This map is not an exhaustive list of all fountains around campus. Please add mo
 
 - as a user, I want to be able to click on a pin and view its information
 - as a user, I want to be able to select a pin and add to favourites
-- as a user, I want to be able to add a pin to the map with a tag, a picture,
+- as a user, I want to be able to add a pin to the map with a tag,
 location, and directions
 - as a user, I want to be able to mark a pin as "unavailable" or "broken"
 - as a user, I want to be able to make edits on a pin's information 
@@ -44,9 +44,31 @@ water bottle icon, and others are shown as a red pin. The pins are centered arou
 on. 
 - You can save the state of my application by clicking on "main menu" then selecting "save"
 - You can load the state of my application by clicking on "main menu" then selecting "load"
+- Because of the overwritten Equals method, pins with matching information in all fields are considered
+duplicates and causes an error
 
 ## Citations 
 
 userPin icons: https://icons8.com/icon/13800/location
+
 waterFountain icons: https://icons8.com/icon/W1eLHFFCMpBA/bottle-of-water
+
 ubc campus map taken from: https://planning.ubc.ca/about-us/campus-maps
+
+## Phase 4: Task 2
+
+
+Mon Nov 27 18:23:50 PST 2023
+new water fountain created
+
+
+Mon Nov 27 18:23:50 PST 2023
+fountain status edited
+
+
+Mon Nov 27 18:23:50 PST 2023
+fountain direction edited
+
+
+Mon Nov 27 18:24:04 PST 2023
+found pin(s) with matching location within list of all pins

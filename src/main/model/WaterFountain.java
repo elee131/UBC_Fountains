@@ -22,6 +22,8 @@ public class WaterFountain implements Pin {
         tag = "Water Fountain";
         directions = "";
         id = UUID.randomUUID().toString();
+
+        EventLog.getInstance().logEvent(new Event("new water fountain created"));
     }
 
     // REQUIRES: input must be valid status;  "Broken" or "working"
@@ -30,6 +32,7 @@ public class WaterFountain implements Pin {
     @Override
     public void setStatus(String status) {
         this.status = status;
+        EventLog.getInstance().logEvent(new Event("fountain status edited"));
     }
 
 
@@ -38,6 +41,7 @@ public class WaterFountain implements Pin {
     @Override
     public void setDirection(String directions) {
         this.directions = directions;
+        EventLog.getInstance().logEvent(new Event("fountain direction edited"));
     }
 
     // MODIFIES: this
@@ -45,6 +49,7 @@ public class WaterFountain implements Pin {
     @Override
     public void setLocation(String location) {
         this.location = location;
+        EventLog.getInstance().logEvent(new Event("fountain location edited"));
     }
 
     // MODIFIES: this
@@ -52,6 +57,8 @@ public class WaterFountain implements Pin {
     @Override
     public void setTag(String tag) {
         this.tag = tag;
+        EventLog.getInstance().logEvent(new Event("fountain tag edited"));
+
 
     }
 

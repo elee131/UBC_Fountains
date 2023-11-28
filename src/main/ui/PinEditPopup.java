@@ -178,7 +178,6 @@ public class PinEditPopup extends JOptionPane {
         }
 
         MapGUI.pointList.add(point);
-        System.out.println(newPin.getTag());
         MapGUI.background.updatePinsAndPoints(allPins.getAllPins(), MapGUI.pointList);
 
 

@@ -25,6 +25,7 @@ public class UserPin implements Pin {
         directions = "";
         id = UUID.randomUUID().toString();
 
+        EventLog.getInstance().logEvent(new Event("new userpin created"));
     }
 
     // REQUIRES: status must be Working, Available, Broken, or Unavailable
@@ -33,6 +34,8 @@ public class UserPin implements Pin {
     @Override
     public void setStatus(String status) {
         this.status = status;
+        EventLog.getInstance().logEvent(new Event("userPin status edited"));
+
     }
 
     // MODIFIES: this
@@ -40,6 +43,7 @@ public class UserPin implements Pin {
     @Override
     public void setDirection(String direction) {
         this.directions = direction;
+        EventLog.getInstance().logEvent(new Event("userPin direction edited"));
     }
 
     // MODIFIES: this
@@ -47,6 +51,7 @@ public class UserPin implements Pin {
     @Override
     public void setLocation(String location) {
         this.location = location;
+        EventLog.getInstance().logEvent(new Event("userPin location edited"));
     }
 
     // MODIFIES: this
@@ -54,7 +59,7 @@ public class UserPin implements Pin {
     @Override
     public void setTag(String tag) {
         this.tag = tag;
-
+        EventLog.getInstance().logEvent(new Event("userPin tag edited"));
     }
 
 
