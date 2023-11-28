@@ -72,3 +72,18 @@ fountain direction edited
 
 Mon Nov 27 18:24:04 PST 2023
 found pin(s) with matching location within list of all pins
+
+## Phase 4: task 3
+
+One of the biggest things I would refactor is the Pins interface and the two classes extending it.
+The two classes that extend Pin are functionally the same. So I would change Pin class to be a concrete class that
+with implementation, and give it a point field so that MapGUI does not have to keep track of the clicked points
+in a separate list. This change would lessen the amount of fields stored in Json files, and MapGUI class would become
+more cohesive as it can focus more on displaying the GUI rather than keeping track of the state of the application. 
+
+Another class I wish I could overhaul are the Map, MapGUI, and BackgroundPanel classes. MapGUI does not adhere to single
+responsibility clause at the moment and its tasks can be split into multiple classes. I would split it into 
+SearchManager, MenuManager, JsonManager, PinsManager(in charge of displaying appropriate pins), and MapGUI (which would
+handle the task of displaying the different managers on one JFrame). This would improve readability and maintainability
+of the code. Right now, MapGUI is managing so many different fields by itself that it is overwhelming to rework or debug
+as it is not immediately clear where the code is going wrong. 
