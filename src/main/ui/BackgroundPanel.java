@@ -20,6 +20,9 @@ public class BackgroundPanel extends JComponent implements MouseListener {
     private List<Pin> pinList;
     private List<Point> pointList;
 
+    // MODIFIES: this
+    // EFFECTS: constructs a panel with a background image and list of pins and points
+    // that allows each pin to be drawn at the correct location
     public BackgroundPanel(Image bgImage, Image pinIcon, Image waterIcon) {
 
         this.bgImage = bgImage;

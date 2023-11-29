@@ -75,6 +75,8 @@ found pin(s) with matching location within list of all pins
 
 ## Phase 4: task 3
 
+![UML_Design_Diagram.jpg](..%2FUML_Design_Diagram.jpg)
+
 One of the biggest things I would refactor is the Pins interface and the two classes extending it.
 The two classes that extend Pin are functionally the same. So I would change Pin class to be a concrete class that
 with implementation, and give it a point field so that MapGUI does not have to keep track of the clicked points

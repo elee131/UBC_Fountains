@@ -320,6 +320,8 @@ public class MapGUI extends JFrame implements WindowListener {
 
     }
 
+
+    // EFFECTS: on window close, print log of important events in the program
     @Override
     public void windowClosing(WindowEvent e) {
         EventLog log = EventLog.getInstance();
@@ -331,11 +333,6 @@ public class MapGUI extends JFrame implements WindowListener {
 
     @Override
     public void windowClosed(WindowEvent e) {
-        EventLog log = EventLog.getInstance();
-
-        for (Event next : log) {
-            System.out.println(next.toString() + "\n\n");
-        }
     }
 
     @Override
