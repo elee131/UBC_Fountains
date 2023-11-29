@@ -54,6 +54,8 @@ waterFountain icons: https://icons8.com/icon/W1eLHFFCMpBA/bottle-of-water
 
 ubc campus map taken from: https://planning.ubc.ca/about-us/campus-maps
 
+event logging and printing code from https://github.students.cs.ubc.ca/CPSC210/AlarmSystem.git
+
 ## Phase 4: Task 2
 
 
