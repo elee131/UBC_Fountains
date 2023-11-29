@@ -10,7 +10,6 @@ of their choice.
 
 Each pin would these key information:
 - a tag describing the pin
-- a picture
 - UBC building code/general location in case of user-pins
 - directions from the entrance of the building (not for all pins) 
 

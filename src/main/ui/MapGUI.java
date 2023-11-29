@@ -65,22 +65,9 @@ public class MapGUI extends JFrame implements WindowListener {
         this.setContentPane(background);
 
         initializeFields();
-        initializeSomePins();
         addWindowListener(this);
 
         setVisible(true);
-    }
-
-    // MODIFIES: this
-    // EFFECTS: initializes some pins for the constructor
-    private void initializeSomePins() {
-        allPins.addPin(new UserPin("ICCS", "Water"));
-        allPins.addPin(new WaterFountain("ICCS"));
-        allPins.addPin(new UserPin("NEST", "food"));
-        pointList.add(new Point(200,300));
-        pointList.add(new Point(300, 400));
-        pointList.add(new Point(600, 100));
-        background.updatePinsAndPoints(allPins.getAllPins(), pointList);
     }
 
     // MODIFIES: this
